@@ -30,12 +30,14 @@ environment:
 dependencies:
   bloc: ^9.0.0
   cupertino_icons: ^1.0.8
+  dots_indicator: ^4.0.1
   easy_localization: ^3.0.7+1
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
   flutter_launcher_icons: ^0.14.4
   flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.2.0
   get_it: ^8.0.3
   http: ^1.4.0
   shared_preferences: ^2.5.3

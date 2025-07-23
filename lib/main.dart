@@ -18,7 +18,7 @@ void main() async {
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
       path: 'assets/langs',
-      fallbackLocale: Locale('ar'),
+      fallbackLocale: Locale('en'),
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
         minTextAdapt: true,

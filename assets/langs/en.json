@@ -1,0 +1,76 @@
+{
+  "onboarding": {
+    "skip": "Skip"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "forgotPassword": "Forgot password?",
+    "createAccount": "Create Account",
+    "doYouHaveAccount": "Do you have an account ? Sign In",
+    "dontHaveAccount": "Don’t have an account yet? Sign up",
+    "email": "Your Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "sendCode": "Send Code",
+    "verify": "Verify",
+    "resetPassword": "Reset Password",
+    "newPasswordInfo": "Your new password must be different from previously used password"
+  },
+  "profile": {
+    "nickname": "Nickname",
+    "dateOfBirth": "Date of Birth",
+    "gender": "Gender",
+    "editProfile": "Edit Profile",
+    "logout": "Log Out",
+    "logoutConfirm": "Are you sure you want to log out?",
+    "yesLogout": "Yes, Logout",
+    "cancel": "Cancel"
+  },
+  "home": {
+    "location": "Location",
+    "searchDoctor": "Search doctor...",
+    "searchDoctorHospital": "Search Doctor, Hospital",
+    "specialistDoctors": "Looking for Specialist Doctors?",
+    "found": "found",
+    "scheduleAppointment": "Schedule an appointment with our top doctors.",
+    "categories": "Categories",
+    "seeAll": "See All",
+    "reviews": "Reviews",
+    "save": "Save"
+  },
+  "doctor": {
+    "cardiologist": "Cardiologist",
+    "dentist": "Dentist",
+    "gynecologist": "Gynecologist",
+    "pediatrics": "Pediatrics",
+    "gastroenterologist": "Gastroenterologist",
+    "orthopedic": "Orthopedic Surgery",
+    "neurology": "Neurology",
+    "drDavidPatel": "Dr. David Patel",
+    "drJessicaTurner": "Dr. Jessica Turner",
+    "drEmilyWalker": "Dr. Emily Walker",
+    "drMichaelJohnson": "Dr. Michael Johnson",
+    "drEmmaGreen": "Dr. Emma Green"
+  },
+  "appointment": {
+    "book": "Book Appointment",
+    "confirmed": "Your appointment with Dr. David Patel is confirmed for June 30, 2023, at 10:00 AM.",
+    "selectDate": "Select Date",
+    "selectHour": "Select Hour",
+    "upcoming": "Upcoming",
+    "completed": "Completed",
+    "canceled": "Canceled",
+    "cancel": "Cancel",
+    "reschedule": "Reschedule",
+    "rebook": "Re-Book",
+    "addReview": "Add Review",
+    "success": "Appointment Success",
+    "cancellation": "Appointment Cancelled",
+    "change": "Scheduled Changed"
+  },
+  "notification": {
+    "title": "Notification",
+    "markAllRead": "Mark all as read"
+  }
+}

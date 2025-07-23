@@ -1,0 +1,76 @@
+{
+  "onboarding": {
+    "skip": "تخطي"
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "createAccount": "إنشاء حساب",
+    "doYouHaveAccount": "هل لديك حساب؟ تسجيل الدخول",
+    "dontHaveAccount": "ليس لديك حساب؟ أنشئ حساباً",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "sendCode": "إرسال الرمز",
+    "verify": "تحقق",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "newPasswordInfo": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور المستخدمة سابقاً"
+  },
+  "profile": {
+    "nickname": "الاسم المستعار",
+    "dateOfBirth": "تاريخ الميلاد",
+    "gender": "الجنس",
+    "editProfile": "تعديل الملف الشخصي",
+    "logout": "تسجيل الخروج",
+    "logoutConfirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+    "yesLogout": "نعم، تسجيل الخروج",
+    "cancel": "إلغاء"
+  },
+  "home": {
+    "location": "الموقع",
+    "searchDoctor": "ابحث عن طبيب...",
+    "searchDoctorHospital": "ابحث عن طبيب، مستشفى",
+    "specialistDoctors": "هل تبحث عن أطباء متخصصين؟",
+    "found": "تم العثور",
+    "scheduleAppointment": "حدد موعدًا مع أفضل الأطباء لدينا.",
+    "categories": "الفئات",
+    "seeAll": "عرض الكل",
+    "reviews": "التقييمات",
+    "save": "حفظ"
+  },
+  "doctor": {
+    "cardiologist": "طبيب قلب",
+    "dentist": "طبيب أسنان",
+    "gynecologist": "طبيبة نسائية",
+    "pediatrics": "طبيب أطفال",
+    "gastroenterologist": "أخصائي الجهاز الهضمي",
+    "orthopedic": "جراحة العظام",
+    "neurology": "أمراض الأعصاب",
+    "drDavidPatel": "د. ديفيد باتيل",
+    "drJessicaTurner": "د. جيسيكا تيرنر",
+    "drEmilyWalker": "د. إميلي ووكر",
+    "drMichaelJohnson": "د. مايكل جونسون",
+    "drEmmaGreen": "د. إيما غرين"
+  },
+  "appointment": {
+    "book": "حجز موعد",
+    "confirmed": "تم تأكيد موعدك مع د. ديفيد باتيل في 30 يونيو 2023 الساعة 10:00 صباحاً.",
+    "selectDate": "اختر التاريخ",
+    "selectHour": "اختر الوقت",
+    "upcoming": "القادمة",
+    "completed": "مكتملة",
+    "canceled": "ملغاة",
+    "cancel": "إلغاء",
+    "reschedule": "إعادة الجدولة",
+    "rebook": "إعادة الحجز",
+    "addReview": "إضافة تقييم",
+    "success": "تم حجز الموعد بنجاح",
+    "cancellation": "تم إلغاء الموعد",
+    "change": "تم تغيير الموعد"
+  },
+  "notification": {
+    "title": "الإشعارات",
+    "markAllRead": "تحديد الكل كمقروء"
+  }
+}

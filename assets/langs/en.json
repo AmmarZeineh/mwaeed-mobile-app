@@ -26,6 +26,7 @@
     }
   },
   "common": {
+    "required_field" : "This field is required",
     "ok": "Ok",
     "cancel": "Cancel",
     "yes": "Yes",

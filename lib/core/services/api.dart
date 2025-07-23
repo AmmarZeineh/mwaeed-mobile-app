@@ -16,17 +16,21 @@ class Api {
     }
   }
 
-  Future<dynamic> put(
-      {required String url,
-      @required dynamic body,
-      @required String? token}) async {
+  Future<dynamic> put({
+    required String url,
+    @required dynamic body,
+    @required String? token,
+  }) async {
     Map<String, String> headers = {};
     headers.addAll({'Content-Type': 'application/x-www-form-urlencoded'});
     if (token != null) {
       headers.addAll({'Authorization': 'Bearer $token'});
     }
-    http.Response response =
-        await http.put(Uri.parse(url), headers: headers, body: body);
+    http.Response response = await http.put(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
 
     if (response.statusCode == 200) {
       dynamic data = jsonDecode(response.body);
@@ -36,23 +40,26 @@ class Api {
     }
   }
 
-  Future<dynamic> post(
-      {required String url,
-      @required dynamic body,
-      @required String? token}) async {
+  Future<dynamic> post({
+    required String url,
+    @required dynamic body,
+    @required String? token,
+  }) async {
     Map<String, String> headers = {};
     if (token != null) {
       headers.addAll({'Authorization': 'Bearer $token'});
     }
-    http.Response response =
-        await http.post(Uri.parse(url), headers: headers, body: body);
+    http.Response response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       dynamic data = jsonDecode(response.body);
-
       return data;
     } else {
       throw Exception('${jsonDecode(response.body)}');
     }
-  }  
+  }
 }

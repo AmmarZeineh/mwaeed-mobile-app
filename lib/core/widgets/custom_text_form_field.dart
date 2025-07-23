@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 
@@ -23,7 +24,7 @@ class CustomTextFormField extends StatelessWidget {
       onSaved: onSaved,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'هذا الحقل مطلوب';
+          return tr('common.required_field');
         }
         return null;
       },

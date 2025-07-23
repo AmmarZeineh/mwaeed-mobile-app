@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:mwaeed_mobile_app/core/widgets/custom_elevated_button.dart';
+import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
 
 class PageViewItem extends StatelessWidget {
   const PageViewItem({
@@ -38,10 +39,14 @@ class PageViewItem extends StatelessWidget {
                 child: CustomElevatedButton(
                   title: tr('common.next'),
                   onPressed: () {
-                    pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeIn,
-                    );
+                    if (pageController.page!.round() >= 2) {
+                      Navigator.pushNamed(context, SignupView.routeName);
+                    } else {
+                      pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                      );
+                    }
                   },
                 ),
               ),

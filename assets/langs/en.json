@@ -1,4 +1,16 @@
 {
+  "auth": {
+    "phone": "Phone Number",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "create_account": "Create Account",
+    "forgot_password": "Forgot Password?",
+    "dont_have_account": "Don't have an account?",
+    "signup": "Sign Up",
+    "already_have_account": "Already have an account?"
+  },
   "onboarding": {
     "screen1": {
       "title": "Welcome to Mawaeed",

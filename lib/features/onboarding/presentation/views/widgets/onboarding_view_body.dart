@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_images.dart';
+import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/widgets/page_view_item.dart';
 
 class OnboardingViewBody extends StatefulWidget {
@@ -78,9 +79,14 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
         ),
         SizedBox(height: 24),
         Expanded(
-          child: Text(
-            tr('common.skip'),
-            style: AppTextStyles.w400_14.copyWith(color: Colors.grey),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, SignupView.routeName);
+            },
+            child: Text(
+              tr('common.skip'),
+              style: AppTextStyles.w400_14.copyWith(color: Colors.grey),
+            ),
           ),
         ),
       ],

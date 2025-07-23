@@ -36,7 +36,12 @@ class MwaeedMobileApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isArabic = context.locale.languageCode == 'ar';
     return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        fontFamily: isArabic ? 'Cairo' : 'Poppins',
+      ),
       onGenerateRoute: onGenerateRoutes,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,

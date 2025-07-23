@@ -1,4 +1,16 @@
 {
+  "auth": {
+    "phone": "رقم الهاتف",
+    "name": "الاسم",
+    "email": "البريد الالكتروني",
+    "password": "كلمة المرور",
+    "login": "تسجيل الدخول",
+    "create_account": "انشاء حساب",
+    "forgot_password": "هل نسيت كلمة المرور؟",
+    "dont_have_account": "ليس لديك حساب؟",
+    "signup": "تسجيل",
+    "already_have_account": "لديك حساب بالفعل؟"
+  },
   "onboarding": {
     "screen1": {
       "title": "مرحباً بك في مواعيد",

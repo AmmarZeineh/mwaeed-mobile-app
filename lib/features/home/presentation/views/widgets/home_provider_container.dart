@@ -28,7 +28,6 @@ class HomeProviderContainer extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              // صورة الطبيب
               Container(
                 width: 80,
                 height: 80,
@@ -39,23 +38,19 @@ class HomeProviderContainer extends StatelessWidget {
               ),
               const SizedBox(width: 16),
 
-              // معلومات الطبيب
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // اسم الطبيب
                     Text('Mohammed', style: AppTextStyles.w600_18),
                     const SizedBox(height: 4),
 
-                    // التخصص
-                    Text(
+                  Text(
                       'Doctor',
                       style: AppTextStyles.w500_14.copyWith(color: Colors.grey),
                     ),
                     const SizedBox(height: 8),
 
-                    // الموقع
                     Row(
                       children: [
                         Icon(
@@ -77,7 +72,6 @@ class HomeProviderContainer extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
 
-                    // التقييم والمراجعات
                     Row(
                       children: [
                         const Icon(Icons.star, size: 16, color: Colors.amber),
@@ -96,7 +90,6 @@ class HomeProviderContainer extends StatelessWidget {
                 ),
               ),
 
-              // زر المفضلة
               IconButton(
                 onPressed: () {},
                 icon: Icon(Icons.favorite, color: Colors.red, size: 24),

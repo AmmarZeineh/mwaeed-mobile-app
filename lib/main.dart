@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mwaeed_mobile_app/core/helper_functions/on_generate_routes.dart';
 import 'package:mwaeed_mobile_app/core/services/custom_bloc_observer.dart';
 import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dart';
-import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +47,7 @@ class MwaeedMobileApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      initialRoute: OnboardingView.routeName,
+      initialRoute: HomeView.routeName,
     );
   }
 }

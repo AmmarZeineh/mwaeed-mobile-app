@@ -33,6 +33,12 @@
     "close": "اغلاق",
     "next": "التالي",
     "skip": "تخطي",
-    "loading": "جاري التحميل"
+    "loading": "جاري التحميل",
+    "see_all": "اظهار الكل"
+  },
+  "home": {
+    "search": "بحث",
+    "looking_for_provider": "هل تبحث عن مقدم خدمة؟",
+    "scedule_appointment": "احجز موعد مع افضل مقدمي الخدمات"
   }
 }

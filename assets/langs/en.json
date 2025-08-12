@@ -33,6 +33,12 @@
     "close": "Close",
     "next": "Next",
     "skip": "Skip",
-    "loading": "Loading"
+    "loading": "Loading",
+    "see_all": "See all"
+  },
+  "home": {
+    "search": "Search",
+    "looking_for_provider": "Looking for specialist provider?",
+    "scedule_appointment": "Schedule an appointment with our top doctors."
   }
 }

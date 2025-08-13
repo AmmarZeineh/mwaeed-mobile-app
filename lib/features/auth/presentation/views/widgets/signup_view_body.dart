@@ -1,4 +1,6 @@
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
@@ -6,6 +8,7 @@ import 'package:mwaeed_mobile_app/core/utils/app_images.dart';
 import 'package:mwaeed_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:mwaeed_mobile_app/core/widgets/custom_text_form_field.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
+import 'package:mwaeed_mobile_app/features/auth/presentation/views/login_view.dart';
 
 class SignupViewBody extends StatefulWidget {
   const SignupViewBody({super.key});
@@ -17,7 +20,7 @@ class SignupViewBody extends StatefulWidget {
 class _SignupViewBodyState extends State<SignupViewBody> {
   GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  String? name, email, password, phone;
+  String? name, email, password, phone, city;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 32),
+              SizedBox(height: 20),
               Image.asset(
                 Assets.imagesLogo,
                 height: MediaQuery.sizeOf(context).height / 4,
@@ -71,6 +74,13 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                 title: 'auth.password'.tr(),
               ),
               SizedBox(height: 24),
+              // CitiesDropdown(
+              //   onCitySelected: (value) {
+              //     log(value.toString());
+              //     city = value;
+              //   },
+              // ),
+              // SizedBox(height: 24),
               CustomElevatedButton(
                 title: tr('auth.signup'),
                 onPressed: () {
@@ -81,9 +91,34 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                       password: password!,
                       name: name!,
                       phone: phone!,
+                      // city: city!,
                     );
                   }
                 },
+              ),
+
+              SizedBox(height: 15),
+
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: "auth.do_you_have_an_account".tr(),
+                    style: const TextStyle(color: Colors.grey, fontSize: 16),
+                    children: [
+                      TextSpan(
+                        text: "auth.login".tr(),
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, LoginView.routeName);
+                          },
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
@@ -91,4 +126,62 @@ class _SignupViewBodyState extends State<SignupViewBody> {
       ),
     );
   }
+  // }
+
+  // class CitiesDropdown extends StatefulWidget {
+  //   final Function(String?) onCitySelected;
+
+  //   const CitiesDropdown({super.key, required this.onCitySelected});
+
+  //   @override
+  //   State<CitiesDropdown> createState() => _CitiesDropdownState();
+  // }
+
+  // class _CitiesDropdownState extends State<CitiesDropdown> {
+  //   final List<String> cities = [
+  //     'دمشق',
+  //     'حلب',
+  //     'حمص',
+  //     'اللاذقية',
+  //     'طرطوس',
+  //     'حماة',
+  //   ];
+
+  //   String? selectedCity;
+
+  //   @override
+  //   Widget build(BuildContext context) {
+  //     return Center(
+  //       child: DropdownButton2<String>(
+  //         isExpanded: true,
+  //         hint: const Text(
+  //           'select city',
+  //           style: TextStyle(fontSize: 16, color: Colors.grey),
+  //         ),
+  //         items: cities
+  //             .map(
+  //               (city) => DropdownMenuItem<String>(
+  //                 value: city,
+  //                 child: Text(city, style: const TextStyle(fontSize: 16)),
+  //               ),
+  //             )
+  //             .toList(),
+  //         value: selectedCity,
+  //         onChanged: (value) {
+  //           setState(() {
+  //             selectedCity = value;
+  //           });
+  //           widget.onCitySelected(value);
+  //         },
+  //         buttonStyleData: const ButtonStyleData(
+  //           decoration: BoxDecoration(shape: BoxShape.rectangle),
+  //           padding: EdgeInsets.symmetric(horizontal: 16),
+  //           height: 50,
+  //           width: 300,
+  //         ),
+  //         dropdownStyleData: const DropdownStyleData(maxHeight: 200),
+  //         menuItemStyleData: const MenuItemStyleData(height: 40),
+  //       ),
+  //     );
+  //   }
 }

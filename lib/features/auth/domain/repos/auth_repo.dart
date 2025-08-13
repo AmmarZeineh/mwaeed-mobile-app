@@ -7,5 +7,20 @@ abstract class AuthRepo {
     required String password,
     required String name,
     required String phone,
+    // required String city
+  });
+
+  Future<Either<Failure, void>> verifyEmail({
+    required String email,
+    required String verificationCode,
+  });
+
+  Future<Either<Failure, void>> resendVerificationEmail({
+    required String email,
+  });
+
+  Future<Either<Failure, void>> login({
+    required String email,
+    required String password,
   });
 }

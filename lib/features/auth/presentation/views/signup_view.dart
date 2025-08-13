@@ -5,6 +5,7 @@ import 'package:mwaeed_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:mwaeed_mobile_app/core/services/get_it_service.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/repos/auth_repo.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
+import 'package:mwaeed_mobile_app/features/auth/presentation/views/verify_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/widgets/signup_view_body.dart';
 
 class SignupView extends StatelessWidget {
@@ -34,6 +35,8 @@ class SignupViewBodyBlocConsumer extends StatelessWidget {
           showErrorMessage(state.errMessage, context);
         } else if (state is SignupSuccess) {
           showSuccessMessage('Success', context);
+          final email = context.read<SignupCubit>().email;
+          Navigator.pushNamed(context, VerifyView.routeName,arguments: email);
         }
       },
       builder: (context, state) {

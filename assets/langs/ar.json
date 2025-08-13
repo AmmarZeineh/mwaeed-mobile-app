@@ -9,7 +9,18 @@
     "forgot_password": "هل نسيت كلمة المرور؟",
     "dont_have_account": "ليس لديك حساب؟",
     "signup": "تسجيل",
-    "already_have_account": "لديك حساب بالفعل؟"
+    "already_have_account": "لديك حساب بالفعل؟",
+    "Verify_code": "رمز التأكيد",
+    "Verify": "تأكيد",
+    "Verification_success": "تم التحقق بنجاح",
+    "Resend_available_in":"الارسال متاح بعد",
+    "Code_resent": "تم ارسال رمز التحقق مره اخرى",
+    "Enter_valid_code": "ادخل رمز التحقق الصحيح",
+    "Resend_code": "ارسل رمز التحقق مره اخرى",
+    "do_you_have_an_account": " هل لديك حساب ؟",
+    "hi_welcome_back": "مرحباً بك مرة اخرى",
+    "hope_your_fine": "نتمنى ان تكون جيداً",
+    "dont_have_an_account": " لا يوجد لديك حساب ؟"
   },
   "onboarding": {
     "screen1": {
@@ -26,7 +37,7 @@
     }
   },
   "common": {
-    "required_field" : "هذا الحقل مطلوب",
+    "required_field": "هذا الحقل مطلوب",
     "ok": "حسناً",
     "cancel": "الغاء",
     "yes": "نعم",
@@ -34,6 +45,8 @@
     "close": "اغلاق",
     "next": "التالي",
     "skip": "تخطي",
-    "loading": "جاري التحميل"
+    "loading": "جاري التحميل",
+    "success": "نجاح"
+
   }
 }

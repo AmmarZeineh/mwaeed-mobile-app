@@ -9,6 +9,7 @@ import 'package:mwaeed_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:mwaeed_mobile_app/core/widgets/custom_text_form_field.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/login_view.dart';
+import 'package:mwaeed_mobile_app/features/auth/presentation/views/login_view.dart';
 
 class SignupViewBody extends StatefulWidget {
   const SignupViewBody({super.key});

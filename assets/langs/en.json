@@ -34,11 +34,14 @@
     "next": "Next",
     "skip": "Skip",
     "loading": "Loading",
-    "see_all": "See all"
+    "see_all": "See all",
+    "try_again": "Try again"
   },
   "home": {
     "search": "Search",
     "looking_for_provider": "Looking for specialist provider?",
-    "scedule_appointment": "Schedule an appointment with our top doctors."
+    "scedule_appointment": "Schedule an appointment with our top doctors.",
+    "categories": "Categories",
+    "providers" : "Providers"
   }
 }

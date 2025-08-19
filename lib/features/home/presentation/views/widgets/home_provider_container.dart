@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 
 class HomeProviderContainer extends StatelessWidget {
-  const HomeProviderContainer({super.key});
-
+  const HomeProviderContainer({
+    super.key,
+    required this.name,
+    required this.rate,
+    required this.cat,
+    required this.location,
+  });
+  final String name, rate, cat, location;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,11 +48,11 @@ class HomeProviderContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Mohammed', style: AppTextStyles.w600_18),
+                    Text(name, style: AppTextStyles.w600_18),
                     const SizedBox(height: 4),
 
-                  Text(
-                      'Doctor',
+                    Text(
+                      cat,
                       style: AppTextStyles.w500_14.copyWith(color: Colors.grey),
                     ),
                     const SizedBox(height: 8),
@@ -61,7 +67,7 @@ class HomeProviderContainer extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            'Mazzeh',
+                            location,
                             style: AppTextStyles.w400_12.copyWith(
                               color: Colors.grey[600],
                             ),
@@ -76,7 +82,7 @@ class HomeProviderContainer extends StatelessWidget {
                       children: [
                         const Icon(Icons.star, size: 16, color: Colors.amber),
                         const SizedBox(width: 4),
-                        Text(4.4.toString(), style: AppTextStyles.w500_14),
+                        Text(rate, style: AppTextStyles.w500_14),
                         const SizedBox(width: 8),
                         Text(
                           '10 Reviews',

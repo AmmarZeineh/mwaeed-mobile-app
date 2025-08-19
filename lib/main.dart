@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mwaeed_mobile_app/core/helper_functions/on_generate_routes.dart';
 import 'package:mwaeed_mobile_app/core/services/custom_bloc_observer.dart';
+import 'package:mwaeed_mobile_app/core/services/get_it_service.dart';
 import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dart';
+import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Prefs.init();
+  setupLocator();
   await ScreenUtil.ensureScreenSize();
   Bloc.observer = CustomBlocObserver();
 
@@ -39,6 +42,9 @@ class MwaeedMobileApp extends StatelessWidget {
     final isArabic = context.locale.languageCode == 'ar';
     return MaterialApp(
       theme: ThemeData(
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: AppColors.primaryColor,
+        ),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: isArabic ? 'Cairo' : 'Poppins',
       ),

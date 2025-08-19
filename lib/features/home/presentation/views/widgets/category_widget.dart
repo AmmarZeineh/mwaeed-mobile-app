@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 
 class CustomCategoryWidget extends StatelessWidget {
-  const CustomCategoryWidget({super.key, required this.color});
+  const CustomCategoryWidget({super.key, required this.color, required this.name});
   final Color color;
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +16,7 @@ class CustomCategoryWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Doctor',
+            name,
             style: AppTextStyles.w600_18.copyWith(color: Colors.white),
           ),
         ),

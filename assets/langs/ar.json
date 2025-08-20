@@ -47,6 +47,15 @@
     "skip": "تخطي",
     "loading": "جاري التحميل",
     "success": "نجاح"
-
+,
+    "see_all": "اظهار الكل",
+    "try_again": "حاول مرة اخرى "
+  },
+  "home": {
+    "search": "بحث",
+    "looking_for_provider": "هل تبحث عن مقدم خدمة؟",
+    "scedule_appointment": "احجز موعد مع افضل مقدمي الخدمات",
+    "categories": "الفئات",
+    "providers": "مقدمي الخدمات"
   }
 }

@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
+import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
 
 class HomeProviderContainer extends StatelessWidget {
-  const HomeProviderContainer({
-    super.key,
-    required this.name,
-    required this.rate,
-    required this.cat,
-    required this.location,
-  });
-  final String name, rate, cat, location;
+  const HomeProviderContainer({super.key, required this.providerEntity});
+  final ProviderEntity providerEntity;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,13 +14,13 @@ class HomeProviderContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             spreadRadius: 1,
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
-        border: Border.all(color: Colors.grey.withOpacity(0.2), width: 1),
+        border: Border.all(color: Colors.grey.withValues(alpha: 0.2), width: 1),
       ),
       child: InkWell(
         onTap: () {},
@@ -48,11 +43,12 @@ class HomeProviderContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(name, style: AppTextStyles.w600_18),
+                    Text(providerEntity.name, style: AppTextStyles.w600_18),
                     const SizedBox(height: 4),
 
                     Text(
-                      cat,
+                      providerEntity.categories[0].name,
+
                       style: AppTextStyles.w500_14.copyWith(color: Colors.grey),
                     ),
                     const SizedBox(height: 8),
@@ -67,7 +63,7 @@ class HomeProviderContainer extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            location,
+                            providerEntity.city,
                             style: AppTextStyles.w400_12.copyWith(
                               color: Colors.grey[600],
                             ),
@@ -82,7 +78,7 @@ class HomeProviderContainer extends StatelessWidget {
                       children: [
                         const Icon(Icons.star, size: 16, color: Colors.amber),
                         const SizedBox(width: 4),
-                        Text(rate, style: AppTextStyles.w500_14),
+                        Text(4.toString(), style: AppTextStyles.w500_14),
                         const SizedBox(width: 8),
                         Text(
                           '10 Reviews',

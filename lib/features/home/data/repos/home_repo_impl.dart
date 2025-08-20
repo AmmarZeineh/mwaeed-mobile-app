@@ -5,7 +5,9 @@ import 'package:mwaeed_mobile_app/constants.dart';
 import 'package:mwaeed_mobile_app/core/errors/failure.dart';
 import 'package:mwaeed_mobile_app/core/services/api.dart';
 import 'package:mwaeed_mobile_app/features/home/data/models/category_model.dart';
+import 'package:mwaeed_mobile_app/features/home/data/models/provider_model.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/entities/category_entitiy.dart';
+import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/repos/home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {
@@ -27,6 +29,27 @@ class HomeRepoImpl implements HomeRepo {
         categories.add(CategoryModel.fromJson(data['data'][i]).toEntity());
       }
       return Right(categories);
+    } catch (e) {
+      log(e.toString());
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProviderEntity>>> getProviders({
+    required int skip,
+    int limit = 10,
+  }) async {
+    try {
+      var data = await _api.get(
+        url: '$baseUrl/user/providers/withJobs?skip=$skip&limit=$limit',
+        token: null,
+      );
+      List<ProviderEntity> providers = [];
+      for (var i = 0; i < data['data'].length; i++) {
+        providers.add(ProviderModel.fromJson(data['data'][i]).toEntity());
+      }
+      return Right(providers);
     } catch (e) {
       log(e.toString());
       return Left(ServerFailure(e.toString()));

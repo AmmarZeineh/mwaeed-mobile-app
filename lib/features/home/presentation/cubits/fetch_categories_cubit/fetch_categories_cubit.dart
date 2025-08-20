@@ -20,7 +20,6 @@ class FetchCategoriesCubit extends Cubit<FetchCategoriesState> {
     isLoading = true;
 
     if (!loadMore) {
-      // أول تحميل
       emit(FetchCategoriesLoading());
       categories = [];
       skip = 0;

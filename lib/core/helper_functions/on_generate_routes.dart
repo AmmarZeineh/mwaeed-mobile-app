@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/login_view.dart';
-import 'package:mwaeed_mobile_app/features/auth/presentation/views/login_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/verify_view.dart';

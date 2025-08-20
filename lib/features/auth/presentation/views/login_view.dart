@@ -6,6 +6,7 @@ import 'package:mwaeed_mobile_app/core/services/get_it_service.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/repos/auth_repo.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/widgets/login_view_body.dart';
+import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -26,9 +27,7 @@ class LoginView extends StatelessWidget {
 }
 
 class LoginViewConsumer extends StatelessWidget {
-  const LoginViewConsumer({
-    super.key,
-  });
+  const LoginViewConsumer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,11 @@ class LoginViewConsumer extends StatelessWidget {
         if (state is LoginFailure) {
           showErrorMessage(state.errMessage, context);
         } else if (state is LoginSuccess) {
-          showSuccessMessage('Success', context);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            HomeView.routeName,
+            (route) => false,
+          );
         }
       },
       builder: (context, state) {

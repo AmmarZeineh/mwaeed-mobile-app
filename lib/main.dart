@@ -7,6 +7,7 @@ import 'package:mwaeed_mobile_app/core/services/custom_bloc_observer.dart';
 import 'package:mwaeed_mobile_app/core/services/get_it_service.dart';
 import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
+import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 
 void main() async {
@@ -53,7 +54,7 @@ class MwaeedMobileApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      initialRoute: HomeView.routeName,
+      initialRoute: SignupView.routeName,
     );
   }
 }

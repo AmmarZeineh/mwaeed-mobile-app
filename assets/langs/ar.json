@@ -13,7 +13,7 @@
     "Verify_code": "رمز التأكيد",
     "Verify": "تأكيد",
     "Verification_success": "تم التحقق بنجاح",
-    "Resend_available_in":"الارسال متاح بعد",
+    "Resend_available_in": "الارسال متاح بعد",
     "Code_resent": "تم ارسال رمز التحقق مره اخرى",
     "Enter_valid_code": "ادخل رمز التحقق الصحيح",
     "Resend_code": "ارسل رمز التحقق مره اخرى",
@@ -46,8 +46,7 @@
     "next": "التالي",
     "skip": "تخطي",
     "loading": "جاري التحميل",
-    "success": "نجاح"
-,
+    "success": "نجاح",
     "see_all": "اظهار الكل",
     "try_again": "حاول مرة اخرى "
   },

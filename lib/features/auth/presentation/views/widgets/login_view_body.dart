@@ -72,6 +72,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     context.read<LoginCubit>().login(
                       email: email!,
                       password: password!,
+                      context: context,
                     );
                   }
                 },

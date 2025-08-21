@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/errors/failure.dart';
 
 abstract class AuthRepo {
@@ -22,5 +23,6 @@ abstract class AuthRepo {
   Future<Either<Failure, void>> login({
     required String email,
     required String password,
+    required BuildContext context
   });
 }

@@ -1,12 +1,17 @@
-import 'package:bloc/bloc.dart';
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mwaeed_mobile_app/constants.dart';
+import 'package:mwaeed_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:mwaeed_mobile_app/core/helper_functions/on_generate_routes.dart';
 import 'package:mwaeed_mobile_app/core/services/custom_bloc_observer.dart';
 import 'package:mwaeed_mobile_app/core/services/get_it_service.dart';
 import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
+import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 
@@ -28,7 +33,10 @@ void main() async {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MwaeedMobileApp();
+          return BlocProvider(
+            create: (context) => UserCubit(),
+            child: MwaeedMobileApp(),
+          );
         },
       ),
     ),
@@ -54,7 +62,21 @@ class MwaeedMobileApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      initialRoute: SignupView.routeName,
+      initialRoute: checkIfLoggedIn(context)
+          ? HomeView.routeName
+          : SignupView.routeName,
     );
+  }
+}
+
+bool checkIfLoggedIn(BuildContext context) {
+  if (Prefs.getString(userKey) != null) {
+    UserEntity userEntity = UserEntity.fromJson(
+      jsonDecode(Prefs.getString(userKey)),
+    );
+    context.read<UserCubit>().setUser(userEntity);
+    return true;
+  } else {
+    return false;
   }
 }

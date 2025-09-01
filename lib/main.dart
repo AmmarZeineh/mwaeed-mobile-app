@@ -70,7 +70,7 @@ class MwaeedMobileApp extends StatelessWidget {
 }
 
 bool checkIfLoggedIn(BuildContext context) {
-  if (Prefs.getString(userKey) != null) {
+  if (Prefs.getString(userKey).isNotEmpty) {
     UserEntity userEntity = UserEntity.fromJson(
       jsonDecode(Prefs.getString(userKey)),
     );

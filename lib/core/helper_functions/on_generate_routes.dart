@@ -4,6 +4,8 @@ import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.d
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/verify_view.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:mwaeed_mobile_app/features/provider_details/presentation/views/book_appoinment_view.dart';
+import 'package:mwaeed_mobile_app/features/provider_details/presentation/views/provider_details.dart';
 
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
@@ -13,12 +15,15 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const SignupView());
     case HomeView.routeName:
       return MaterialPageRoute(builder: (_) => const HomeView());
-      case LoginView.routeName:
+    case LoginView.routeName:
       return MaterialPageRoute(builder: (_) => const LoginView());
-       case VerifyView.routeName:
-        final String email =
-          settings.arguments as String ;
-      return MaterialPageRoute(builder: (_) =>  VerifyView(email: email,));
+    case VerifyView.routeName:
+      final String email = settings.arguments as String;
+      return MaterialPageRoute(builder: (_) => VerifyView(email: email));
+    case ProviderDetailsView.routeName:
+      return MaterialPageRoute(builder: (_) => const ProviderDetailsView());
+    case BookAppointmentView.routeName:
+      return MaterialPageRoute(builder: (_) => const BookAppointmentView());
     default:
       return MaterialPageRoute(builder: (_) => const Scaffold());
   }

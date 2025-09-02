@@ -1,4 +1,12 @@
 {
+  "provider_details": {
+    "provider_details": "Provider Details",
+    "book_appointment": "Book Appointment",
+    "select_date": "Select Date",
+    "select_hour": "Select Hour",
+    "confirm": "Confirm"
+
+  },
   "auth": {
     "phone": "Phone Number",
     "name": "Name",
@@ -53,6 +61,6 @@
     "looking_for_provider": "Looking for specialist provider?",
     "scedule_appointment": "Schedule an appointment with our top doctors.",
     "categories": "Categories",
-    "providers" : "Providers"
+    "providers": "Providers"
   }
 }

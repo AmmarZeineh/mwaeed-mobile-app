@@ -14,6 +14,7 @@ import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
+import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +65,7 @@ class MwaeedMobileApp extends StatelessWidget {
       locale: context.locale,
       initialRoute: checkIfLoggedIn(context)
           ? HomeView.routeName
-          : SignupView.routeName,
+          : OnboardingView.routeName,
     );
   }
 }

@@ -85,12 +85,13 @@ class AuthRepoImpl implements AuthRepo {
     required String email,
     required String password,
     required BuildContext context,
+    required String fcmToken,
   }) async {
     try {
       var data = await api.post(
         token: null,
         url: '$baseUrl/auth/login',
-        body: {'email': email, 'password': password},
+        body: {'email': email, 'password': password, 'fcmToken': fcmToken},
       );
       UserEntity userEntity = UserModel.fromJson(data).toEntity();
       Prefs.setString(userKey, jsonEncode(userEntity.toJson()));

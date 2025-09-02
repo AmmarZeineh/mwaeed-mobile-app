@@ -23,6 +23,7 @@ abstract class AuthRepo {
   Future<Either<Failure, void>> login({
     required String email,
     required String password,
-    required BuildContext context
+    required BuildContext context,
+    required String fcmToken,
   });
 }

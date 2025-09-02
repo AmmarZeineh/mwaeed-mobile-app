@@ -13,12 +13,14 @@ class LoginCubit extends Cubit<LoginState> {
     required String email,
     required String password,
     required BuildContext context,
+    required String fcmToken,
   }) async {
     emit(LoginLoading());
     final result = await authRepo.login(
       email: email,
       password: password,
       context: context,
+      fcmToken: fcmToken,
     );
     result.fold(
       (l) => emit(LoginFailure(l.message)),

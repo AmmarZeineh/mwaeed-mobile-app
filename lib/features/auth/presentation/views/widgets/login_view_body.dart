@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mwaeed_mobile_app/core/services/notification_service.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_images.dart';
 import 'package:mwaeed_mobile_app/core/widgets/custom_elevated_button.dart';
@@ -66,14 +69,19 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               SizedBox(height: 23),
               CustomElevatedButton(
                 title: "auth.login".tr(),
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState!.validate()) {
+                    var token = await NotificationService.getFcmToken();
                     formKey.currentState!.save();
-                    context.read<LoginCubit>().login(
-                      email: email!,
-                      password: password!,
-                      context: context,
-                    );
+                    if (context.mounted) {
+                      context.read<LoginCubit>().login(
+                        email: email!,
+                        password: password!,
+                        context: context,
+                        fcmToken: token!,
+                      );
+                    }
+                    log(token.toString());
                   }
                 },
               ),

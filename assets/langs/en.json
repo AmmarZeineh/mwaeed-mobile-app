@@ -46,7 +46,10 @@
     "loading": "Loading",
     "success": "Success",
     "see_all": "See all",
-    "try_again": "Try again"
+    "try_again": "Try again",
+    "provider": "Provider",
+    "job": "Job",
+    "service": "Service"
   },
   "home": {
     "search": "Search",
@@ -54,5 +57,28 @@
     "scedule_appointment": "Schedule an appointment with our top doctors.",
     "categories": "Categories",
     "providers" : "Providers"
+  },
+  "search":{
+    "search": "Search",
+    "no_results_found": "No results found",
+    "what_are_you_looking_for": "What are you looking for?"
+  },
+  "api": {
+    "connection_timeout": "Connection timeout. Please check your internet connection.",
+    "send_timeout": "Request timeout. Please try again.",
+    "receive_timeout": "Server response timeout. Please try again.",
+    "request_cancelled": "Request was cancelled.",
+    "connection_error": "Connection error. Please check your internet connection.",
+    "certificate_error": "Certificate error. Please try again.",
+    "unknown_error": "Unknown error occurred.",
+    "bad_request": "Bad request.",
+    "unauthorized": "Unauthorized. Please login again.",
+    "forbidden": "Access forbidden.",
+    "not_found": "Resource not found.",
+    "validation_error": "Validation error.",
+    "server_error": "Server error. Please try again later.",
+    "bad_gateway": "Bad gateway. Please try again later.",
+    "service_unavailable": "Service unavailable. Please try again later.",
+    "request_failed": "Request failed with status: {}"
   }
 }

@@ -7,12 +7,26 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.title,
     required this.iconData,
+    this.onTap,
+    this.readOnly = false,
+    this.heroTag,
+    this.autofocus = false,
+    this.onSubmitted,
   });
   final String title;
   final IconData iconData;
+  final void Function()? onTap;
+  final bool readOnly;
+  final String? heroTag;
+  final bool autofocus;
+  final void Function(String)? onSubmitted;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    final textField = TextField(
+      onTap: onTap,
+      readOnly: readOnly,
+      autofocus: autofocus,
+      onSubmitted: onSubmitted,
       decoration: InputDecoration(
         hint: Text(
           tr(title),
@@ -24,5 +38,14 @@ class CustomTextField extends StatelessWidget {
         filled: true,
       ),
     );
+
+    if (heroTag != null) {
+      return Hero(
+        tag: heroTag!,
+        child: Material(color: Colors.transparent, child: textField),
+      );
+    }
+
+    return textField;
   }
 }

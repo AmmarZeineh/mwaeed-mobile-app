@@ -47,7 +47,9 @@ class HomeProviderContainer extends StatelessWidget {
                     const SizedBox(height: 4),
 
                     Text(
-                      providerEntity.categories[0].name,
+                      providerEntity.categories.isNotEmpty
+                          ? providerEntity.categories[0].name
+                          : '',
 
                       style: AppTextStyles.w500_14.copyWith(color: Colors.grey),
                     ),

@@ -8,6 +8,7 @@ import 'package:mwaeed_mobile_app/features/home/presentation/cubits/fetch_provid
 import 'package:mwaeed_mobile_app/features/home/presentation/views/widgets/categories_section.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/widgets/looking_for_provider_container.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/widgets/sliver_provider_list_view_builder.dart';
+import 'package:mwaeed_mobile_app/features/search/presentation/views/search_view.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -22,7 +23,15 @@ class HomeViewBody extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 16),
-                CustomTextField(title: 'home.search', iconData: Icons.search),
+                CustomTextField(
+                  readOnly: true,
+                  title: 'home.search',
+                  iconData: Icons.search,
+                  heroTag: 'search-field-hero',
+                  onTap: () {
+                    Navigator.pushNamed(context, SearchView.routeName);
+                  },
+                ),
                 SizedBox(height: 16),
                 LookingForProviderContainer(),
                 SizedBox(height: 16),

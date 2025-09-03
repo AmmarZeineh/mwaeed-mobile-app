@@ -23,10 +23,12 @@ class ProviderModel {
       name: json['name'],
       phone: json['phoneNumber'],
       city: json['city'] ?? ' ',
-      categories: List.generate(
-        json['jobs'].length,
-        (index) => CategoryModel.fromJson(json['jobs'][index]).toEntity(),
-      ),
+      categories: json['jobs'] == null
+          ? []
+          : List.generate(
+              json['jobs'].length,
+              (index) => CategoryModel.fromJson(json['jobs'][index]).toEntity(),
+            ),
     );
   }
 

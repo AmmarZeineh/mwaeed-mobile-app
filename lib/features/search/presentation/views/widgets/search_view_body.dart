@@ -59,7 +59,7 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                 CustomTextField(
                   title: 'home.search',
                   iconData: Icons.search,
-                  heroTag: 'search-field-hero',
+                  heroTag: 'search-page-field-hero',
                   readOnly: false,
                   autofocus: true,
                   onSubmitted: (p0) {

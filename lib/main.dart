@@ -14,9 +14,9 @@ import 'package:mwaeed_mobile_app/core/services/get_it_service.dart';
 import 'package:mwaeed_mobile_app/core/services/notification_service.dart';
 import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
+import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
-import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 import 'package:mwaeed_mobile_app/firebase_options.dart';
 
 void main() async {
@@ -72,7 +72,7 @@ class MwaeedMobileApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       initialRoute: checkIfLoggedIn(context)
-          ? HomeView.routeName
+          ? MainLayoutView.routeName
           : SignupView.routeName,
     );
   }

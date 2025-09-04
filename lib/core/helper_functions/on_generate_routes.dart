@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/login_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/verify_view.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:mwaeed_mobile_app/features/profile/presentation/views/profile_view.dart';
 import 'package:mwaeed_mobile_app/features/search/presentation/views/search_view.dart';
 
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
@@ -34,6 +36,10 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
           );
         },
       );
+    case MainLayoutView.routeName:
+      return MaterialPageRoute(builder: (_) => MainLayoutView());
+    case ProfileView.routeName:
+      return MaterialPageRoute(builder: (_) => ProfileView());
     default:
       return MaterialPageRoute(builder: (_) => const Scaffold());
   }

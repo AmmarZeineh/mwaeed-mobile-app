@@ -26,7 +26,7 @@ class CustomBottomNavBarWithBadge extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -43,7 +43,7 @@ class CustomBottomNavBarWithBadge extends StatelessWidget {
               label: 'nav.home'.tr(),
             ),
             _buildNavItemWithBadge(
-              index: 3,
+              index: 1,
               icon: Icons.person_outline,
               activeIcon: Icons.person,
               label: 'nav.profile'.tr(),

@@ -31,4 +31,22 @@ class UserEntity {
         email = json['email'],
         phoneNumber = json['phoneNumber'],
         city = json['city'];
+
+  UserEntity copyWith({
+    String? accessToken,
+    int? id,
+    String? name,
+    String? email,
+    String? phoneNumber,
+    String? city,
+  }) {
+    return UserEntity(
+      accessToken: accessToken ?? this.accessToken,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      city: city ?? this.city,
+    );
+  }
 }

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
-import 'package:mwaeed_mobile_app/features/provider_details/presentation/views/widgets/review_item_widget.dart';
+import 'package:mwaeed_mobile_app/features/payment/presentation/views/widgets/review_item_widget.dart';
 
 class ReviewsSection extends StatelessWidget {
   const ReviewsSection({super.key});

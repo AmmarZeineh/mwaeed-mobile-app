@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
-import 'package:mwaeed_mobile_app/features/provider_details/presentation/views/widgets/custom_text.dart';
+import 'package:mwaeed_mobile_app/features/payment/presentation/views/widgets/custom_text.dart';
 
 class AboutMeSection extends StatelessWidget {
   const AboutMeSection({super.key});

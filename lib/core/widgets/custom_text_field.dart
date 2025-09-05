@@ -7,12 +7,15 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.title,
     required this.iconData,
+    this.controller,
   });
   final String title;
   final IconData iconData;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         hint: Text(
           tr(title),

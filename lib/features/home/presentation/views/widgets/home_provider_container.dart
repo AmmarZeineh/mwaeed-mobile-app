@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
-import 'package:mwaeed_mobile_app/features/provider_details/presentation/views/provider_details.dart';
+import 'package:mwaeed_mobile_app/features/payment/presentation/views/provider_details.dart';
 
 class HomeProviderContainer extends StatelessWidget {
   const HomeProviderContainer({super.key, required this.providerEntity});
@@ -25,7 +25,11 @@ class HomeProviderContainer extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, ProviderDetailsView.routeName);
+          Navigator.pushNamed(
+            context,
+            ProviderDetailsView.routeName,
+            arguments: providerEntity,
+          );
         },
         borderRadius: BorderRadius.circular(16),
         child: Padding(

@@ -45,9 +45,11 @@ class HomeRepoImpl implements HomeRepo {
         url: '$baseUrl/user/providers/withJobs?skip=$skip&limit=$limit',
         token: null,
       );
+      log(data.toString());
       List<ProviderEntity> providers = [];
       for (var i = 0; i < data['data'].length; i++) {
         providers.add(ProviderModel.fromJson(data['data'][i]).toEntity());
+        log(providers[i].toString());
       }
       return Right(providers);
     } catch (e) {

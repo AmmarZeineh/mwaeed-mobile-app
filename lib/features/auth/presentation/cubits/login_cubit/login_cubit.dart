@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/repos/auth_repo.dart';
 
 part 'login_state.dart';

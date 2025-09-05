@@ -4,6 +4,8 @@ import 'package:mwaeed_mobile_app/features/home/data/repos/home_repo_impl.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/repos/home_repo.dart';
 import 'package:mwaeed_mobile_app/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/repos/auth_repo.dart';
+import 'package:mwaeed_mobile_app/features/payment/data/repos/payment_repo_impl.dart';
+import 'package:mwaeed_mobile_app/features/payment/domain/repo/payment_repo.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -12,4 +14,5 @@ void setupLocator() {
   getIt.registerSingleton<Api>(Api());
   getIt.registerSingleton<HomeRepo>(HomeRepoImpl(getIt.get<Api>()));
   getIt.registerSingleton<AuthRepo>(AuthRepoImpl(getIt.get<Api>()));
+  getIt.registerSingleton<PaymentRepo>(PaymentRepoImpl(getIt.get<Api>()));
 }

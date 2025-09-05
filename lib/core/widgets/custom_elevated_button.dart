@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';

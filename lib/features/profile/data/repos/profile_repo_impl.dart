@@ -36,4 +36,14 @@ class ProfileRepoImpl implements ProfileRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    try {
+      _api.post(url: '$baseUrl/auth/logout');
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

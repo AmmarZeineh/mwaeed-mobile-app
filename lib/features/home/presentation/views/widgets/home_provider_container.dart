@@ -5,100 +5,117 @@ import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.
 class HomeProviderContainer extends StatelessWidget {
   const HomeProviderContainer({super.key, required this.providerEntity});
   final ProviderEntity providerEntity;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
+      child: Material(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
-            spreadRadius: 1,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.2), width: 1),
-      ),
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(Icons.person),
+        elevation: 2, // بديل للـ boxShadow
+        shadowColor: Colors.grey.withValues(alpha: 0.1),
+        child: InkWell(
+          onTap: () {},
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: Colors.grey.withValues(alpha: 0.2),
+                width: 1,
               ),
-              const SizedBox(width: 16),
-
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(providerEntity.name, style: AppTextStyles.w600_18),
-                    const SizedBox(height: 4),
-
-                    Text(
-                      providerEntity.categories.isNotEmpty
-                          ? providerEntity.categories[0].name
-                          : '',
-
-                      style: AppTextStyles.w500_14.copyWith(color: Colors.grey),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.grey[100], // إضافة لون خلفية للأيقونة
                     ),
-                    const SizedBox(height: 8),
+                    child: const Icon(
+                      Icons.person,
+                      size: 40,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
 
-                    Row(
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.location_on,
-                          size: 16,
-                          color: Colors.grey[600],
+                        Text(providerEntity.name, style: AppTextStyles.w600_18),
+                        const SizedBox(height: 4),
+
+                        Text(
+                          providerEntity.categories.isNotEmpty
+                              ? providerEntity.categories[0].name
+                              : 'No category',
+                          style: AppTextStyles.w500_14.copyWith(
+                            color: Colors.grey,
+                          ),
                         ),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            providerEntity.city,
-                            style: AppTextStyles.w400_12.copyWith(
+                        const SizedBox(height: 8),
+
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              size: 16,
                               color: Colors.grey[600],
                             ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                providerEntity.city,
+                                style: AppTextStyles.w400_12.copyWith(
+                                  color: Colors.grey[600],
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.star,
+                              size: 16,
+                              color: Colors.amber,
+                            ),
+                            const SizedBox(width: 4),
+                            Text('4.0', style: AppTextStyles.w500_14),
+                            const SizedBox(width: 8),
+                            Text(
+                              '10 Reviews',
+                              style: AppTextStyles.w400_12.copyWith(
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                  ),
 
-                    Row(
-                      children: [
-                        const Icon(Icons.star, size: 16, color: Colors.amber),
-                        const SizedBox(width: 4),
-                        Text(4.toString(), style: AppTextStyles.w500_14),
-                        const SizedBox(width: 8),
-                        Text(
-                          '10 Reviews',
-                          style: AppTextStyles.w400_12.copyWith(
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.favorite_border, // تغيير إلى favorite_border
+                      color: Colors.red,
+                      size: 24,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.favorite, color: Colors.red, size: 24),
-              ),
-            ],
+            ),
           ),
         ),
       ),

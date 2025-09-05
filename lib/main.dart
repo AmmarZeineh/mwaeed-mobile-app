@@ -17,6 +17,8 @@ import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
+import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
+import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
 import 'package:mwaeed_mobile_app/firebase_options.dart';
 
 void main() async {
@@ -42,8 +44,13 @@ void main() async {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return BlocProvider(
-            create: (context) => UserCubit(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => UserCubit()),
+              BlocProvider(
+                create: (context) => ProfileCubit(getIt.get<ProfileRepo>()),
+              ),
+            ],
             child: MwaeedMobileApp(),
           );
         },

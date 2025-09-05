@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:mwaeed_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:mwaeed_mobile_app/core/services/get_it_service.dart';
+import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/repos/auth_repo.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/widgets/login_view_body.dart';
-import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -38,7 +38,7 @@ class LoginViewConsumer extends StatelessWidget {
         } else if (state is LoginSuccess) {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            HomeView.routeName,
+            MainLayoutView.routeName,
             (route) => false,
           );
         }

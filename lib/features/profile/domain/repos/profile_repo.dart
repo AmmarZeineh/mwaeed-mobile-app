@@ -8,4 +8,7 @@ abstract class ProfileRepo {
     required int userId,
   });
   Future<Either<Failure, List<CityEntity>>> getCities();
+
+    Future<Either<Failure, void>> logout();
+
 }

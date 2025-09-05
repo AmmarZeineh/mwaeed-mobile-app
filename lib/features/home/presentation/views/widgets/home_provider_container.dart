@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
+import 'package:mwaeed_mobile_app/features/booking/presentation/views/provider_details.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
 
 class HomeProviderContainer extends StatelessWidget {
@@ -16,7 +17,13 @@ class HomeProviderContainer extends StatelessWidget {
         elevation: 2, // بديل للـ boxShadow
         shadowColor: Colors.grey.withValues(alpha: 0.1),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              ProviderDetailsView.routeName,
+              arguments: providerEntity,
+            );
+          },
           borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(

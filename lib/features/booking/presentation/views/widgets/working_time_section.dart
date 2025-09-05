@@ -22,4 +22,3 @@ class WorkingTimeSection extends StatelessWidget {
     );
   }
 }
-

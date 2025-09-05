@@ -1,4 +1,4 @@
-class Service {
+class ServiceModel {
   final int id;
   final String name;
   final String description;
@@ -6,7 +6,7 @@ class Service {
   final double? depositAmount;
   final int durationInMin;
 
-  Service({
+  ServiceModel({
     required this.id,
     required this.name,
     required this.description,
@@ -15,8 +15,8 @@ class Service {
     required this.durationInMin,
   });
 
-  factory Service.fromJson(Map<String, dynamic> json) {
-    return Service(
+  factory ServiceModel.fromJson(Map<String, dynamic> json) {
+    return ServiceModel(
       id: json['id'],
       name: json['name'],
       description: json['description'],

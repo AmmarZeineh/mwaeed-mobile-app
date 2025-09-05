@@ -62,7 +62,8 @@
     "job": "الوظيفة",
     "service": "الخدمة",
     "language": "اللغة",
-    "save": "حفظ"
+    "save": "حفظ",
+    "currency": "ل.س"
   },
   "home": {
     "search": "بحث",
@@ -96,7 +97,8 @@
   },
   "nav": {
     "home": "الصفحة الرئيسية",
-    "profile": "الملف الشخصي"
+    "profile": "الملف الشخصي",
+    "appointments": "المواعيد"
   },
   "profile": {
     "personal_info": "المعلومات الشخصية",
@@ -113,5 +115,23 @@
     "password_must_be_at_least_six_letters": "يجب ان تكون كلمة المرور ست احرف على الاقل",
     "unmatched_password": "كلمة المرور غير متطابقة",
     "confirm_new_password": "تأكيد كلمة المرور الجديدة"
+  },
+  "appointments": {
+    "pending": "معلق",
+    "confirmed": "مؤكد",
+    "cancelled": "ملغي",
+    "completed": "مكتمل",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "service_id": "الخدمة",
+    "provider_id": "مقدم الخدمة",
+    "notes": "ملاحظات",
+    "payment_info": "معلومات الدفع",
+    "fully_paid": "مدفوع بالكامل",
+    "partial_payment": "مدفوع جزئياً",
+    "total_paid": "المدفوع",
+    "remaining": "المتبقي",
+    "deposit_paid": "تم دفع العربون",
+    "id": "الرقم التعريفي"
   }
 }

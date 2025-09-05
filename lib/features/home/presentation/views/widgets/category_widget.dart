@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 
 class CustomCategoryWidget extends StatelessWidget {
-  const CustomCategoryWidget({super.key, required this.color, required this.name});
+  const CustomCategoryWidget({
+    super.key,
+    required this.color,
+    required this.name,
+  });
   final Color color;
   final String name;
   @override

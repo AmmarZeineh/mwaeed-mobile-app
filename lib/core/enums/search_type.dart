@@ -7,4 +7,3 @@ enum SearchType {
 
   final int value;
 }
-

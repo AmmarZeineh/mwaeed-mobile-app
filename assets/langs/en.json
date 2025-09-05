@@ -5,7 +5,6 @@
     "select_date": "Select Date",
     "select_hour": "Select Hour",
     "confirm": "Confirm"
-
   },
   "auth": {
     "phone": "Phone Number",
@@ -61,7 +60,8 @@
     "job": "Job",
     "service": "Service",
     "language": "Language",
-    "save": "Save"
+    "save": "Save",
+    "currency": "SYP"
   },
   "home": {
     "search": "Search",
@@ -95,7 +95,8 @@
   },
   "nav": {
     "home": "Home",
-    "profile": "Profile"
+    "profile": "Profile",
+    "appointments": "Appointments"
   },
   "profile": {
     "personal_info": "Personal information",
@@ -112,5 +113,23 @@
     "password_must_be_at_least_six_letters": "Password must be at least six letters",
     "unmatched_password": "Unmatched password",
     "confirm_new_password": "Confirm new password"
+  },
+  "appointments": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "cancelled": "Cancelled",
+    "completed": "Completed",
+    "date": "Date",
+    "time": "Time",
+    "service_id": "Service",
+    "provider_id": "Provider",
+    "notes": "Notes",
+    "payment_info": "Payment Info",
+    "fully_paid": "Fully Paid",
+    "partial_payment": "Partially Paid",
+    "total_paid": "Total Paid",
+    "remaining": "Remaining",
+    "deposit_paid": "Deposit Paid",
+    "id": "ID"
   }
 }

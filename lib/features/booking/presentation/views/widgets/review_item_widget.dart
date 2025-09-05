@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/helper_classes/date_helper.dart';
 
@@ -109,4 +108,3 @@ class ReviewItemWidget extends StatelessWidget {
     );
   }
 }
-

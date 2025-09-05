@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/features/booking/data/models/job_model.dart';
 

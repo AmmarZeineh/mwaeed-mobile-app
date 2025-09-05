@@ -90,7 +90,7 @@ class ProfileInfoField extends StatelessWidget {
                 height: 32.h,
                 decoration: BoxDecoration(
                   color: isEditing
-                      ? Colors.green.withValues(alpha:  0.1)
+                      ? Colors.green.withValues(alpha: 0.1)
                       : AppColors.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8.r),
                 ),

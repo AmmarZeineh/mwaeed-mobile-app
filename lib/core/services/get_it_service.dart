@@ -7,6 +7,8 @@ import 'package:mwaeed_mobile_app/features/home/data/repos/home_repo_impl.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/repos/home_repo.dart';
 import 'package:mwaeed_mobile_app/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/repos/auth_repo.dart';
+import 'package:mwaeed_mobile_app/features/payment/data/repos/payment_repo_impl.dart';
+import 'package:mwaeed_mobile_app/features/payment/domain/repos/payment_repo.dart';
 import 'package:mwaeed_mobile_app/features/profile/data/repos/profile_repo_impl.dart';
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:mwaeed_mobile_app/features/search/data/repos/search_repo_impl.dart';
@@ -20,6 +22,7 @@ void setupLocator() {
   getIt.registerSingleton<NotificationService>(NotificationService());
   getIt.registerSingleton<HomeRepo>(HomeRepoImpl(getIt.get<Api>()));
   getIt.registerSingleton<SearchRepo>(SearchRepoImpl(getIt.get<Api>()));
+  getIt.registerSingleton<PaymentRepo>(PaymentRepoImpl(getIt.get<Api>()));
   getIt.registerSingleton<AuthRepo>(AuthRepoImpl(getIt.get<Api>()));
   getIt.registerSingleton<ProfileRepo>(ProfileRepoImpl(getIt.get<Api>()));
   getIt.registerSingleton<BookingRepo>(BookingRepoImpl(getIt.get<Api>()));

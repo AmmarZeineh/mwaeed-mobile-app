@@ -1,4 +1,3 @@
-
 import 'package:mwaeed_mobile_app/features/booking/data/models/time_slots_model.dart';
 
 class Schedule {

@@ -36,7 +36,7 @@ class SignupViewBodyBlocConsumer extends StatelessWidget {
         } else if (state is SignupSuccess) {
           showSuccessMessage('Success', context);
           final email = context.read<SignupCubit>().email;
-          Navigator.pushNamed(context, VerifyView.routeName,arguments: email);
+          Navigator.pushNamed(context, VerifyView.routeName, arguments: email);
         }
       },
       builder: (context, state) {

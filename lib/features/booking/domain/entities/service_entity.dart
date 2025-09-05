@@ -20,7 +20,7 @@ class ServiceEntity {
   });
 
   // تحويل من الموديل إلى الانتتيتي
-  factory ServiceEntity.fromModel(Service model) {
+  factory ServiceEntity.fromModel(ServiceModel model) {
     return ServiceEntity(
       id: model.id,
       name: model.name,

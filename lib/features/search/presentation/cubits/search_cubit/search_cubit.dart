@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';

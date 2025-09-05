@@ -18,10 +18,6 @@ class TimeSlot {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'dayId': dayId,
-      'startTime': startTime,
-      'endTime': endTime,
-    };
+    return {'dayId': dayId, 'startTime': startTime, 'endTime': endTime};
   }
 }

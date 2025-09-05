@@ -15,8 +15,7 @@ class CreateAppointmentCubit extends Cubit<CreateAppointmentState> {
     required String startTime,
     required String notes,
     required int serviceId,
-      required BuildContext context,
-
+    required BuildContext context,
   }) async {
     emit(CreateAppointmentLoading());
 

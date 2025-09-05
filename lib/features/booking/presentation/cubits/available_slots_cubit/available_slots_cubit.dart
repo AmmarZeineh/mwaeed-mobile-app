@@ -9,7 +9,6 @@ class AvailableSlotsCubit extends Cubit<AvailableSlotsState> {
   final BookingRepo repository;
 
   AvailableSlotsCubit(this.repository) : super(AvailableSlotsInitial());
-  
 
   Future<void> loadAvailableSlots({
     required int jobId,

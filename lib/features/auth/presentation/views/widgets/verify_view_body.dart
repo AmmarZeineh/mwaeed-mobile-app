@@ -66,7 +66,6 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
     return BlocConsumer<VerifyCubit, VerifyState>(
       listener: (context, state) {
         if (state is EmailVerificationLoading) {
-          
           showDialog(
             context: context,
             barrierDismissible: false,
@@ -78,7 +77,6 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
 
         if (state is EmailVerificationSuccess) {
           showSuccessMessage(tr('auth.Verification_success'), context);
-          
         } else if (state is EmailVerificationError) {
           showErrorMessage(state.message, context);
         } else if (state is ResendVerificationSuccess) {
@@ -134,7 +132,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                     title: 'auth.Verify'.tr(),
                   ),
                 ),
-              
+
                 if (_canResend)
                   TextButton(
                     onPressed: () {
@@ -156,9 +154,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                     child: Column(
                       children: [
                         Text(
-                          tr(
-                            'auth.Resend_available_in',
-                          ), 
+                          tr('auth.Resend_available_in'),
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 14,

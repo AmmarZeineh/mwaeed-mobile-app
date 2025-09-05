@@ -29,7 +29,7 @@ class ProfileSettingItem extends StatelessWidget {
               width: 40.w,
               height: 40.h,
               decoration: BoxDecoration(
-                color: AppColors.primaryColor.withValues(alpha:  0.1),
+                color: AppColors.primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Icon(icon, color: AppColors.primaryColor, size: 20.sp),

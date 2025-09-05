@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
+import 'package:mwaeed_mobile_app/features/profile/domain/entities/city_entity.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/views/widgets/card_divider.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/views/widgets/city_drop_down_field.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/views/widgets/profile_info_field.dart';
@@ -18,7 +19,7 @@ class ProfileInfoCard extends StatefulWidget {
   final VoidCallback onUpdateUser;
   final ValueChanged<String> onChanged;
   final Function({bool? name, bool? phone, bool? city}) onToggleEditing;
-  final List<String> cities; // قائمة المحافظات من الـ API
+  final List<CityEntity> cities; // قائمة المحافظات من الـ API
 
   const ProfileInfoCard({
     super.key,
@@ -111,7 +112,9 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
             icon: Icons.location_city_outlined,
             label: 'profile.city'.tr(),
             value: selectedCity,
-            cities: widget.cities,
+            cities: context.locale == Locale('ar')
+                ? widget.cities.map((e) => e.arName).toList()
+                : widget.cities.map((e) => e.enName).toList(),
             isEditing: widget.isEditingCity,
             onChanged: (city) {
               setState(() {

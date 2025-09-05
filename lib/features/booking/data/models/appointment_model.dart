@@ -34,7 +34,8 @@ class Appointment {
       providerId: json['providerId'] ?? 0,
       jobId: json['jobId'] ?? 0,
       serviceId: json['serviceId'] ?? 0,
-      appointmentDate: DateTime.tryParse(json['appointmentDate'] ?? '') ?? DateTime.now(),
+      appointmentDate:
+          DateTime.tryParse(json['appointmentDate'] ?? '') ?? DateTime.now(),
       startTime: json['startTime'] ?? '',
       endTime: json['endTime'] ?? '',
       status: json['status'] ?? '',

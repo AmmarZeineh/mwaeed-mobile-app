@@ -29,8 +29,7 @@ class _PaymentViewBodyState extends State<PaymentViewBody> {
   bool _isProcessing = false;
 
   String getAmount() =>
-      (widget.service.depositAmount ?? widget.service.price)
-          .toStringAsFixed(2);
+      (widget.service.depositAmount ?? widget.service.price).toStringAsFixed(2);
 
   String getDuration(int min) {
     final hours = min ~/ 60;
@@ -399,7 +398,9 @@ class _PaymentViewBodyState extends State<PaymentViewBody> {
 class CardNumberInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     var text = newValue.text;
     if (newValue.selection.baseOffset == 0) return newValue;
 
@@ -411,7 +412,9 @@ class CardNumberInputFormatter extends TextInputFormatter {
 
     var string = buffer.toString();
     return newValue.copyWith(
-        text: string, selection: TextSelection.collapsed(offset: string.length));
+      text: string,
+      selection: TextSelection.collapsed(offset: string.length),
+    );
   }
 }
 
@@ -419,7 +422,9 @@ class CardNumberInputFormatter extends TextInputFormatter {
 class ExpiryDateInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     var text = newValue.text;
     if (newValue.selection.baseOffset == 0) return newValue;
 
@@ -433,6 +438,8 @@ class ExpiryDateInputFormatter extends TextInputFormatter {
 
     var string = buffer.toString();
     return newValue.copyWith(
-        text: string, selection: TextSelection.collapsed(offset: string.length));
+      text: string,
+      selection: TextSelection.collapsed(offset: string.length),
+    );
   }
 }

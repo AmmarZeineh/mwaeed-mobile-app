@@ -25,12 +25,12 @@ class UserEntity {
   };
 
   UserEntity.fromJson(Map<String, dynamic> json)
-      : accessToken = json['accessToken'],
-        id = json['id'],
-        name = json['name'],
-        email = json['email'],
-        phoneNumber = json['phoneNumber'],
-        city = json['city'];
+    : accessToken = json['accessToken'],
+      id = json['id'],
+      name = json['name'],
+      email = json['email'],
+      phoneNumber = json['phoneNumber'],
+      city = json['city'];
 
   UserEntity copyWith({
     String? accessToken,

@@ -173,7 +173,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                       formKey: _formKey,
                       onUpdateUser: _updateUserData,
                       onToggleEditing: _toggleEditingState,
-                      cities: cities.map((e) => e.enName).toList(),
+                      cities: cities,
                       onChanged: (value) {
                         selectedCity = value;
                       },

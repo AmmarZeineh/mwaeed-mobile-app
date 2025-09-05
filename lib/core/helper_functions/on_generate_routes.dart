@@ -6,6 +6,7 @@ import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/verify_view.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:mwaeed_mobile_app/features/payment/presentation/views/appointments_view.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/views/profile_view.dart';
 import 'package:mwaeed_mobile_app/features/booking/domain/entities/service_entity.dart';
 import 'package:mwaeed_mobile_app/features/booking/presentation/views/book_appoinment_view.dart';
@@ -34,7 +35,7 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
     case BookAppointmentView.routeName:
       final args = settings.arguments as Map<String, dynamic>;
       final provider = args['provider'] as ProviderEntity;
-      final job = args['job']; // Type: JobEntity
+      final job = args['job'];
       final services = args['services'] as List<ServiceEntity>;
 
       return MaterialPageRoute(
@@ -64,6 +65,9 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => MainLayoutView());
     case ProfileView.routeName:
       return MaterialPageRoute(builder: (_) => ProfileView());
+    case AppointmentsView.routeName:
+      return MaterialPageRoute(builder: (_) => AppointmentsView());
+
     default:
       return MaterialPageRoute(builder: (_) => const Scaffold());
   }

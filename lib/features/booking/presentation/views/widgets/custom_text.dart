@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:readmore/readmore.dart';

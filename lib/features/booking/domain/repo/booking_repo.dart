@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/errors/failure.dart';
 import 'package:mwaeed_mobile_app/features/booking/data/models/jobs_with_services_model.dart';
-import 'package:mwaeed_mobile_app/features/payment/data/models/Schedule_model.dart';
+import 'package:mwaeed_mobile_app/features/booking/data/models/Schedule_model.dart';
 import 'package:mwaeed_mobile_app/features/booking/data/models/appointment_model.dart';
 
 abstract class BookingRepo {

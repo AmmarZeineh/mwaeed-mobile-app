@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mwaeed_mobile_app/features/booking/data/models/appointment_model.dart';
 import 'package:mwaeed_mobile_app/features/booking/domain/repo/booking_repo.dart';
-import 'package:mwaeed_mobile_app/features/payment/data/models/Schedule_model.dart';
+import 'package:mwaeed_mobile_app/features/booking/data/models/Schedule_model.dart';
 
 part 'available_slots_state.dart';
 

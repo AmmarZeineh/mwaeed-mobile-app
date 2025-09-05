@@ -17,10 +17,9 @@ import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
+import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
-import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
-import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mwaeed_mobile_app/firebase_options.dart';
 
 void main() async {
@@ -82,8 +81,6 @@ class MwaeedMobileApp extends StatelessWidget {
       locale: context.locale,
       initialRoute: checkIfLoggedIn(context)
           ? MainLayoutView.routeName
-          : SignupView.routeName,
-          ? HomeView.routeName
           : OnboardingView.routeName,
     );
   }

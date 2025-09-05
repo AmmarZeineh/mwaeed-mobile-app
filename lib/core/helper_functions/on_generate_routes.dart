@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/login_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
+import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/verify_view.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:mwaeed_mobile_app/features/payment/domain/entities/service_entity.dart';
+import 'package:mwaeed_mobile_app/features/payment/presentation/views/book_appoinment_view.dart';
+import 'package:mwaeed_mobile_app/features/payment/presentation/views/provider_details.dart';
 import 'package:mwaeed_mobile_app/features/search/presentation/views/search_view.dart';
 
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
@@ -15,7 +19,31 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
     case HomeView.routeName:
       return MaterialPageRoute(builder: (_) => const HomeView());
     case LoginView.routeName:
+    case LoginView.routeName:
       return MaterialPageRoute(builder: (_) => const LoginView());
+    case VerifyView.routeName:
+      final String email = settings.arguments as String;
+      return MaterialPageRoute(builder: (_) => VerifyView(email: email));
+    case ProviderDetailsView.routeName:
+      final provider = settings.arguments as ProviderEntity;
+
+      return MaterialPageRoute(
+        builder: (_) => ProviderDetailsView(provider: provider),
+      );
+    case BookAppointmentView.routeName:
+      final args = settings.arguments as Map<String, dynamic>;
+      final provider = args['provider'] as ProviderEntity;
+      final job = args['job']; // Type: JobEntity
+      final services = args['services'] as List<ServiceEntity>;
+
+      return MaterialPageRoute(
+        builder: (_) => BookAppointmentView(
+          providerEntity: provider,
+          job: job,
+          services: services,
+        ),
+      );
+
     case VerifyView.routeName:
       final String email = settings.arguments as String;
       return MaterialPageRoute(builder: (_) => VerifyView(email: email));

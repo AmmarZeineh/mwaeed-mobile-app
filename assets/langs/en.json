@@ -1,4 +1,12 @@
 {
+  "provider_details": {
+    "provider_details": "Provider Details",
+    "book_appointment": "Book Appointment",
+    "select_date": "Select Date",
+    "select_hour": "Select Hour",
+    "confirm": "Confirm"
+
+  },
   "auth": {
     "phone": "Phone Number",
     "name": "Name",
@@ -80,5 +88,6 @@
     "bad_gateway": "Bad gateway. Please try again later.",
     "service_unavailable": "Service unavailable. Please try again later.",
     "request_failed": "Request failed with status: {}"
+    "providers": "Providers"
   }
 }

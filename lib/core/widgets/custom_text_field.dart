@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.title,
     required this.iconData,
+    this.controller,
     this.onTap,
     this.readOnly = false,
     this.heroTag,
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   });
   final String title;
   final IconData iconData;
+  final TextEditingController? controller;
   final void Function()? onTap;
   final bool readOnly;
   final String? heroTag;
@@ -22,6 +24,8 @@ class CustomTextField extends StatelessWidget {
   final void Function(String)? onSubmitted;
   @override
   Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
     final textField = TextField(
       onTap: onTap,
       readOnly: readOnly,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mwaeed_mobile_app/features/home/data/models/category_model.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/entities/category_entitiy.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
@@ -18,6 +20,7 @@ class ProviderModel {
   });
 
   factory ProviderModel.fromJson(Map<String, dynamic> json) {
+    log(json.toString());
     return ProviderModel(
       id: json['id'],
       name: json['name'],

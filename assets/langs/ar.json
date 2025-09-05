@@ -1,4 +1,11 @@
 {
+  "provider_details": {
+    "provider_details": "تفاصيل المزود",
+    "book_appointment": "حجز موعد",
+    "select_date": "حدد التاريخ",
+    "select_hour": "حدد الساعة",
+    "confirm": "تاكيد"
+  },
   "auth": {
     "phone": "رقم الهاتف",
     "name": "الاسم",

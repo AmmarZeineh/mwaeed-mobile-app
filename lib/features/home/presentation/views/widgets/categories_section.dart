@@ -38,7 +38,7 @@ class CategoriesSection extends StatelessWidget {
               } else if (state is FetchCategoriesSuccess) {
                 return CategoriesListviewBuilder(
                   categories: state.categories,
-                  hasMore: state.hasMore,
+                  hasMore: false,
                 );
               }
               return const Center(child: CircularProgressIndicator());

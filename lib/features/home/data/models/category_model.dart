@@ -8,7 +8,7 @@ class CategoryModel {
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
-      id: json['localizations'][0]['id'],
+      id: json['id'],
       name: json['localizations'][0]['name'],
     );
   }

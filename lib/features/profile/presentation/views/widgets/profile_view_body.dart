@@ -6,8 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mwaeed_mobile_app/constants.dart';
 import 'package:mwaeed_mobile_app/core/cubits/user_cubit/user_cubit.dart';
+import 'package:mwaeed_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
+import 'package:mwaeed_mobile_app/features/profile/domain/entities/city_entity.dart';
+import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/views/widgets/profile_action_buttons.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/views/widgets/profile_image_widget.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/views/widgets/profile_info_card.dart';
@@ -27,40 +30,95 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
 
   late final TextEditingController _nameController;
   late final TextEditingController _phoneController;
-  late final TextEditingController _cityController;
 
   bool _isEditingName = false;
   bool _isEditingPhone = false;
   bool _isEditingCity = false;
+  List<CityEntity> cities = [];
+  late String selectedCity;
 
   @override
   void initState() {
     super.initState();
     userEntity = context.read<UserCubit>().currentUser!;
+    selectedCity = userEntity.city;
     _nameController = TextEditingController(text: userEntity.name);
     _phoneController = TextEditingController(text: userEntity.phoneNumber);
-    _cityController = TextEditingController(text: userEntity.city);
   }
 
   @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
-    _cityController.dispose();
     super.dispose();
   }
 
-  void _updateUserData() {
+  String _getCityCode(String formattedName) {
+    switch (formattedName) {
+      case 'Damascus':
+        return 'DAMASCUS';
+      case 'Aleppo':
+        return 'ALEPPO';
+      case 'Homs':
+        return 'HOMS';
+      case 'Hama':
+        return 'HAMA';
+      case 'Lattakia':
+        return 'LATTAKIA';
+      case 'Tartous':
+        return 'TARTOUS';
+      case 'Daraa':
+        return 'DARAA';
+      case 'Sweida':
+        return 'SWEIDA';
+      case 'Quneitra':
+        return 'QUNEITRA';
+      case 'Deir Ezzor':
+        return 'DEIR_EZZOR';
+      case 'Raqqa':
+        return 'RAQQA';
+      case 'Hasaka':
+        return 'HASAKA';
+      case 'Idlib':
+        return 'IDLIB';
+      case 'Damascus Countryside':
+        return 'DAMASCUS_COUNTRYSIDE';
+      default:
+        return formattedName.toUpperCase().replaceAll(' ', '_');
+    }
+  }
+
+  void _updateUserData() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     final updatedUser = UserEntity(
       id: userEntity.id,
       name: _nameController.text.trim(),
       email: userEntity.email,
       phoneNumber: _phoneController.text.trim(),
-      city: _cityController.text.trim(),
+      city: userEntity.city,
       accessToken: userEntity.accessToken,
     );
-    Prefs.setString(userKey, jsonEncode(updatedUser));
+    await context.read<ProfileCubit>().updateUserData(
+      body: {
+        "phoneNumber": updatedUser.phoneNumber,
+        "name": updatedUser.name,
+        "city": _getCityCode(selectedCity),
+      },
+      userId: context.read<UserCubit>().currentUser!.id,
+    );
+
+    await Prefs.setString(userKey, jsonEncode(updatedUser));
+    // ignore: use_build_context_synchronously
     context.read<UserCubit>().updateUser(updatedUser);
+
+    setState(() {
+      _isEditingName = false;
+      _isEditingPhone = false;
+      _isEditingCity = false;
+    });
   }
 
   void _toggleEditingState({bool? name, bool? phone, bool? city}) {
@@ -73,45 +131,64 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserCubit, UserState>(
-      builder: (context, state) {
-        if (context.read<UserCubit>().currentUser != null) {
-          userEntity = context.read<UserCubit>().currentUser!;
+    return BlocConsumer<ProfileCubit, ProfileState>(
+      listener: (context, state) {
+        if (state is ProfileSuccess) {
+          showSuccessMessage('common.success'.tr(), context);
+        } else if (state is ProfileFailure) {
+          showErrorMessage(state.errMessage, context);
         }
+        if (state is ProfileCitiesLoaded) {
+          for (var i = 0; i < state.cities.length; i++) {
+            cities.add(state.cities[i]);
+          }
+        }
+      },
+      builder: (context, profileState) {
+        return BlocBuilder<UserCubit, UserState>(
+          builder: (context, userState) {
+            if (context.read<UserCubit>().currentUser != null) {
+              userEntity = context.read<UserCubit>().currentUser!;
+            }
 
-        return SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 32.h),
-                const ProfileImageWidget(),
-                SizedBox(height: 32.h),
-                SectionTitleWidget(title: 'profile.personal_info'.tr()),
-                SizedBox(height: 16.h),
-                ProfileInfoCard(
-                  userEntity: userEntity,
-                  nameController: _nameController,
-                  phoneController: _phoneController,
-                  cityController: _cityController,
-                  isEditingName: _isEditingName,
-                  isEditingPhone: _isEditingPhone,
-                  isEditingCity: _isEditingCity,
-                  formKey: _formKey,
-                  onUpdateUser: _updateUserData,
-                  onToggleEditing: _toggleEditingState,
+            return SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 32.h),
+                    const ProfileImageWidget(),
+                    SizedBox(height: 32.h),
+                    SectionTitleWidget(title: 'profile.personal_info'.tr()),
+                    SizedBox(height: 16.h),
+                    ProfileInfoCard(
+                      userEntity: userEntity,
+                      nameController: _nameController,
+                      phoneController: _phoneController,
+                      isEditingName: _isEditingName,
+                      isEditingPhone: _isEditingPhone,
+                      isEditingCity: _isEditingCity,
+                      formKey: _formKey,
+                      onUpdateUser: _updateUserData,
+                      onToggleEditing: _toggleEditingState,
+                      cities: cities.map((e) => e.enName).toList(),
+                      onChanged: (value) {
+                        selectedCity = value;
+                      },
+                    ),
+                    SizedBox(height: 32.h),
+                    SectionTitleWidget(title: 'profile.settings'.tr()),
+                    SizedBox(height: 16.h),
+                    const ProfileSettingsCard(),
+                    SizedBox(height: 32.h),
+                    const ProfileActionButtons(),
+                  ],
                 ),
-                SizedBox(height: 32.h),
-                SectionTitleWidget(title: 'profile.settings'.tr()),
-                SizedBox(height: 16.h),
-                const ProfileSettingsCard(),
-                SizedBox(height: 32.h),
-                const ProfileActionButtons(),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );

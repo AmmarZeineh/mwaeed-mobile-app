@@ -13,8 +13,8 @@ class CategoryModel {
         : {};
 
     return CategoryModel(
-      id: firstLocalization['id'] ?? 0, // 🔥 Default 0 لو null
-      name: firstLocalization['name']?.toString() ?? '', // 🔥 Default ''
+      id: json['id'],
+      name: json['localizations'][0]['name'],
     );
   }
 

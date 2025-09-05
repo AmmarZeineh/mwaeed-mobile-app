@@ -11,21 +11,19 @@ class HomeView extends StatelessWidget {
   static const routeName = 'home-view';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) =>
-                  FetchCategoriesCubit(getIt.get<HomeRepo>())..getCategories(),
-            ),
-            BlocProvider(
-              create: (context) =>
-                  FetchProvidersCubit(getIt.get<HomeRepo>())..getProviders(),
-            ),
-          ],
-          child: HomeViewBody(),
-        ),
+    return SafeArea(
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+                FetchCategoriesCubit(getIt.get<HomeRepo>())..getCategories(),
+          ),
+          BlocProvider(
+            create: (context) =>
+                FetchProvidersCubit(getIt.get<HomeRepo>())..getProviders(),
+          ),
+        ],
+        child: const HomeViewBody(),
       ),
     );
   }

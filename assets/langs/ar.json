@@ -12,6 +12,7 @@
     "email": "البريد الالكتروني",
     "password": "كلمة المرور",
     "login": "تسجيل الدخول",
+    "change_password": "تغيير كلمة المرور",
     "create_account": "انشاء حساب",
     "forgot_password": "هل نسيت كلمة المرور؟",
     "dont_have_account": "ليس لديك حساب؟",
@@ -27,7 +28,8 @@
     "do_you_have_an_account": " هل لديك حساب ؟",
     "hi_welcome_back": "مرحباً بك مرة اخرى",
     "hope_your_fine": "نتمنى ان تكون جيداً",
-    "dont_have_an_account": " لا يوجد لديك حساب ؟"
+    "dont_have_an_account": " لا يوجد لديك حساب ؟",
+    "logout": "تسجيل الخروج"
   },
   "onboarding": {
     "screen1": {
@@ -58,7 +60,9 @@
     "try_again": "حاول مرة اخرى ",
     "provider": "مقدم الخدمة",
     "job": "الوظيفة",
-    "service": "الخدمة"
+    "service": "الخدمة",
+    "language": "اللغة",
+    "save": "حفظ"
   },
   "home": {
     "search": "بحث",
@@ -89,5 +93,25 @@
     "bad_gateway": "خطأ في البوابة. يرجى المحاولة مرة أخرى لاحقاً.",
     "service_unavailable": "الخدمة غير متاحة. يرجى المحاولة مرة أخرى لاحقاً.",
     "request_failed": "فشل الطلب برمز الحالة: {}"
+  },
+  "nav": {
+    "home": "الصفحة الرئيسية",
+    "profile": "الملف الشخصي"
+  },
+  "profile": {
+    "personal_info": "المعلومات الشخصية",
+    "name": "الاسم",
+    "email": "البريد الالكتروني",
+    "phone": "رقم الهاتف",
+    "city": "المدينة",
+    "settings": "الإعدادات",
+    "choose_the_lang": "اختر اللغة",
+    "are_you_sure_logout": "هل أنت متأكد من أنك تريد تسجيل الخروج؟",
+    "current_password": "كلمة المرور الحالية",
+    "current_password_is_required": "كلمة المرور الحالية مطلوبة",
+    "new_password": "كلمة المرور الجديدة",
+    "password_must_be_at_least_six_letters": "يجب ان تكون كلمة المرور ست احرف على الاقل",
+    "unmatched_password": "كلمة المرور غير متطابقة",
+    "confirm_new_password": "تأكيد كلمة المرور الجديدة"
   }
 }

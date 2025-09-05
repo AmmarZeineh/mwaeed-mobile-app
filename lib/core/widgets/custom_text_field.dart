@@ -24,8 +24,6 @@ class CustomTextField extends StatelessWidget {
   final void Function(String)? onSubmitted;
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
     final textField = TextField(
       onTap: onTap,
       readOnly: readOnly,

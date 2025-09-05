@@ -88,6 +88,5 @@
     "bad_gateway": "Bad gateway. Please try again later.",
     "service_unavailable": "Service unavailable. Please try again later.",
     "request_failed": "Request failed with status: {}"
-    "providers": "Providers"
   }
 }

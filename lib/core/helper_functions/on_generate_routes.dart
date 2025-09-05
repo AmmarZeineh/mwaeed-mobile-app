@@ -19,7 +19,6 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
     case HomeView.routeName:
       return MaterialPageRoute(builder: (_) => const HomeView());
     case LoginView.routeName:
-    case LoginView.routeName:
       return MaterialPageRoute(builder: (_) => const LoginView());
     case VerifyView.routeName:
       final String email = settings.arguments as String;
@@ -44,9 +43,6 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
         ),
       );
 
-    case VerifyView.routeName:
-      final String email = settings.arguments as String;
-      return MaterialPageRoute(builder: (_) => VerifyView(email: email));
     case SearchView.routeName:
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>

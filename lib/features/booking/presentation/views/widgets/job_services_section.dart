@@ -215,16 +215,21 @@ class JobsServicesSection extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Container(
-                                          width: 8,
-                                          height: 8,
-                                          margin: const EdgeInsets.only(
-                                            top: 6,
-                                            left: 8,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            right: 4,
                                           ),
-                                          decoration: BoxDecoration(
-                                            color: Colors.blue[400],
-                                            shape: BoxShape.circle,
+                                          child: Container(
+                                            width: 8,
+                                            height: 8,
+                                            margin: const EdgeInsets.only(
+                                              top: 6,
+                                              left: 8,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue[400],
+                                              shape: BoxShape.circle,
+                                            ),
                                           ),
                                         ),
                                         Expanded(

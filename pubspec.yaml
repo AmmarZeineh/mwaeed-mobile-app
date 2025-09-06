@@ -43,6 +43,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   flutter_local_notifications: ^19.4.1
   flutter_screenutil: ^5.9.3
+  flutter_stripe: ^12.0.2
   flutter_svg: ^2.2.0
   flutter_verification_code_field: ^1.2.2
   get_it: ^8.0.3

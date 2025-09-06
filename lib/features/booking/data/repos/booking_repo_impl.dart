@@ -85,7 +85,7 @@ class BookingRepoImpl implements BookingRepo {
   }
 
   @override
-  Future<Either<Failure, void>> createAppointment({
+  Future<Either<Failure, int>> createAppointment({
     required int providerId,
     required int jobId,
     required String appointmentDate,
@@ -104,15 +104,36 @@ class BookingRepoImpl implements BookingRepo {
         "jobId": jobId,
       };
 
-      await _api.post(
+      var data = await _api.post(
         url: '$baseUrl/appointments',
         body: body,
         token: context.read<UserCubit>().currentUser!.accessToken,
       );
+      int id = data['id'];
 
-      return const Right(null); // ما في داتا نرجعها
+      return Right(id);
     } catch (e, st) {
       log('Error in createAppointment: $e\n$st');
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> fetchSecretKey({
+    required int appointmentId,
+    required bool isDeposit,
+    required BuildContext context,
+  }) async {
+    try {
+      final data = await _api.post(
+        url: '$baseUrl/appointments/deposit',
+        body: {"appointmentId": appointmentId, "fullPayment": isDeposit},
+        token: context.read<UserCubit>().currentUser!.accessToken,
+      );
+      String clientSecret = data['clientSecret'];
+      return Right(clientSecret);
+    } catch (e) {
+      log(e.toString());
       return Left(ServerFailure(e.toString()));
     }
   }

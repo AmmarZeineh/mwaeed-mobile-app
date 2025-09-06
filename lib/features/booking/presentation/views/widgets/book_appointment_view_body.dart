@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mwaeed_mobile_app/core/helper_functions/snack_bars.dart';
+import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:mwaeed_mobile_app/core/widgets/custom_elevated_button.dart';
@@ -8,6 +13,7 @@ import 'package:mwaeed_mobile_app/core/widgets/custom_text_field.dart';
 import 'package:mwaeed_mobile_app/features/booking/data/models/job_model.dart';
 import 'package:mwaeed_mobile_app/features/booking/domain/entities/service_entity.dart';
 import 'package:mwaeed_mobile_app/features/booking/presentation/cubits/available_slots_cubit/available_slots_cubit.dart';
+import 'package:mwaeed_mobile_app/features/booking/presentation/cubits/client_secret_cubit/client_secret_cubit.dart';
 import 'package:mwaeed_mobile_app/features/booking/presentation/cubits/create_appointment_cubit/create_appointment_cubit.dart';
 import 'package:mwaeed_mobile_app/features/booking/presentation/cubits/create_appointment_cubit/create_appointment_state.dart';
 import 'package:mwaeed_mobile_app/features/booking/presentation/views/widgets/custom_app_bar.dart';
@@ -65,25 +71,200 @@ class _BookAppoinmentViewBodyState extends State<BookAppoinmentViewBody> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CreateAppointmentCubit, CreateAppointmentState>(
-      listener: (context, state) {
-        if (state is CreateAppointmentSuccess) {
+      listener: (context1, mainState) {
+        if (mainState is CreateAppointmentSuccess) {
           showDialog(
+            barrierDismissible: selectedService!.depositAmount == null
+                ? true
+                : false,
             context: context,
-            builder: (_) => AlertDialog(
-              title: const Text('Success'),
-              content: const Text('Appointment booked successfully'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('OK'),
+            builder: (_) => WillPopScope(
+              onWillPop: () async =>
+                  selectedService!.depositAmount == null ? true : false,
+              child: AlertDialog(
+                title: const Text('Success'),
+                content: SizedBox(
+                  height: 110.h,
+                  child: Column(
+                    children: [
+                      const Text('Appointment booked successfully'),
+                      const SizedBox(height: 5),
+                      selectedService!.depositAmount == null
+                          ? SizedBox()
+                          : Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "choose",
+                                    style: AppTextStyles.w400_14,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child:
+                                          BlocConsumer<
+                                            ClientSecretCubit,
+                                            ClientSecretState
+                                          >(
+                                            listener: (context, state) {
+                                              if (state
+                                                  is ClientSecretFailure) {
+                                                showErrorMessage(
+                                                  state.message,
+                                                  context,
+                                                );
+                                              } else if (state
+                                                  is ClientSecretSuccess) {
+                                                log(
+                                                  state.clientSecret.toString(),
+                                                );
+                                                Prefs.setString(
+                                                  'appointment${mainState}_secret_key',
+                                                  state.clientSecret,
+                                                );
+                                                showSuccessMessage(
+                                                  "Success",
+                                                  context,
+                                                );
+                                                Navigator.pop(context);
+                                              }
+                                            },
+                                            builder: (context, state) {
+                                              return ElevatedButton.icon(
+                                                onPressed: () {
+                                                  context
+                                                      .read<ClientSecretCubit>()
+                                                      .fetchClientSecret(
+                                                        context: context,
+                                                        appointmentId:
+                                                            mainState.id,
+                                                        isDeposit: true,
+                                                      );
+                                                  Navigator.pop(context1);
+                                                },
+                                                icon: Icon(
+                                                  Icons.payment,
+                                                  color: Colors.white,
+                                                ),
+                                                label: Text(
+                                                  state is ClientSecretLoading
+                                                      ? "جار التحميل"
+                                                      : "دفع كامل",
+                                                ),
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.green[600],
+                                                  foregroundColor: Colors.white,
+                                                  padding: EdgeInsets.symmetric(
+                                                    vertical: 12,
+                                                  ),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          10,
+                                                        ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    Expanded(
+                                      child:
+                                          BlocConsumer<
+                                            ClientSecretCubit,
+                                            ClientSecretState
+                                          >(
+                                            listener: (context, state) {
+                                              if (state
+                                                  is ClientSecretFailure) {
+                                                showErrorMessage(
+                                                  state.message,
+                                                  context,
+                                                );
+                                              } else if (state
+                                                  is ClientSecretSuccess) {
+                                                log(
+                                                  state.clientSecret.toString(),
+                                                );
+                                                Prefs.setString(
+                                                  'appointment${mainState}_secret_key',
+                                                  state.clientSecret,
+                                                );
+                                                showSuccessMessage(
+                                                  "Success",
+                                                  context,
+                                                );
+                                                Navigator.pop(context);
+                                              }
+                                            },
+                                            builder: (context, state) {
+                                              return ElevatedButton.icon(
+                                                onPressed: () {
+                                                  context
+                                                      .read<ClientSecretCubit>()
+                                                      .fetchClientSecret(
+                                                        context: context,
+                                                        appointmentId:
+                                                            mainState.id,
+                                                        isDeposit: false,
+                                                      );
+                                                  Navigator.pop(context1);
+                                                },
+                                                icon: Icon(
+                                                  Icons.payment,
+                                                  color: Colors.white,
+                                                ),
+                                                label: Text(
+                                                  state is ClientSecretLoading
+                                                      ? "جار التحميل"
+                                                      : "رعبون",
+                                                ),
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.orange[600],
+                                                  foregroundColor: Colors.white,
+                                                  padding: EdgeInsets.symmetric(
+                                                    vertical: 12,
+                                                  ),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          10,
+                                                        ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                    ],
+                  ),
                 ),
-              ],
+                actions: [
+                  selectedService!.depositAmount == null
+                      ? TextButton(
+                          onPressed: () {
+                            Navigator.pop(context1);
+                          },
+                          child: const Text('OK'),
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
           );
-        } else if (state is CreateAppointmentFailure) {
+        } else if (mainState is CreateAppointmentFailure) {
           ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
+            context1,
+          ).showSnackBar(SnackBar(content: Text(mainState.message)));
         }
       },
       builder: (context, state) {

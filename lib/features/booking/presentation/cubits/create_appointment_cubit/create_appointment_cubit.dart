@@ -31,7 +31,7 @@ class CreateAppointmentCubit extends Cubit<CreateAppointmentState> {
 
     result.fold(
       (failure) => emit(CreateAppointmentFailure(failure.message)),
-      (_) => emit(CreateAppointmentSuccess()),
+      (r) => emit(CreateAppointmentSuccess(r)),
     );
   }
 }

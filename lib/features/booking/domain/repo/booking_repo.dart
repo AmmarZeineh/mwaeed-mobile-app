@@ -17,13 +17,19 @@ abstract class BookingRepo {
     required int providerId,
     required int jobId,
   });
-  Future<Either<Failure, void>> createAppointment({
+  Future<Either<Failure, int>> createAppointment({
     required int providerId,
     required int jobId,
     required String appointmentDate,
     required String startTime,
     required String notes,
     required int serviceId,
+    required BuildContext context,
+  });
+
+  Future<Either<Failure, String>> fetchSecretKey({
+    required int appointmentId,
+    required bool isDeposit,
     required BuildContext context,
   });
 }

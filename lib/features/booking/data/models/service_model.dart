@@ -21,7 +21,7 @@ class ServiceModel {
       name: json['name'],
       description: json['description'],
       price: (json['price'] as num).toDouble(),
-      depositAmount: json['depositAmount'] != null
+      depositAmount: json['depositAmount'] != 0
           ? (json['depositAmount'] as num).toDouble()
           : null,
       durationInMin: json['durationInMin'],

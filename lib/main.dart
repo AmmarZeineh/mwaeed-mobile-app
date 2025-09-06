@@ -16,6 +16,8 @@ import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dar
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
+import 'package:mwaeed_mobile_app/features/booking/domain/repo/booking_repo.dart';
+import 'package:mwaeed_mobile_app/features/booking/presentation/cubits/client_secret_cubit/client_secret_cubit.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
@@ -46,6 +48,7 @@ void main() async {
         builder: (context, child) {
           return MultiBlocProvider(
             providers: [
+               BlocProvider(create: (context) => ClientSecretCubit(getIt.get<BookingRepo>())),
               BlocProvider(create: (context) => UserCubit()),
               BlocProvider(
                 create: (context) => ProfileCubit(getIt.get<ProfileRepo>()),

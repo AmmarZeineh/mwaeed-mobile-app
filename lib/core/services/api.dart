@@ -82,6 +82,34 @@ class Api {
     }
   }
 
+  // دالة جديدة لإرسال بيانات multipart/form-data
+  Future<dynamic> postFormData({
+    required String url,
+    required Map<String, dynamic> data,
+    String? token,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      final options = _buildOptions(
+        token,
+        additionalHeaders: {'Content-Type': 'multipart/form-data'},
+      );
+
+      FormData formData = FormData.fromMap(data);
+
+      Response response = await _dio.post(
+        url,
+        data: formData,
+        queryParameters: queryParameters,
+        options: options,
+      );
+
+      return _handleResponse(response);
+    } on DioException catch (e) {
+      throw Exception(_handleError(e));
+    }
+  }
+
   Future<dynamic> put({
     required String url,
     dynamic body,

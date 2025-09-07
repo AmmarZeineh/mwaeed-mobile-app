@@ -95,6 +95,9 @@ List<String> calculateAvailableSlots({
       final currentEnd = start.add(Duration(minutes: serviceDurationInMin));
 
       final isBooked = appointments.any((a) {
+        if (a.status.toUpperCase() == 'CANCELLED') {
+          return false;
+        }
         final bookedStart = DateTime.parse(
           '${a.appointmentDate.toIso8601String().split('T').first} ${a.startTime}',
         );

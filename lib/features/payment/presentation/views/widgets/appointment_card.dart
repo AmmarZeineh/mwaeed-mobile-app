@@ -463,9 +463,7 @@ class AppointmentCard extends StatelessWidget {
                                                     ) {
                                                       Navigator.pop(context);
 
-                                                      print(
-                                                        'Stripe Error: ${e.error}',
-                                                      );
+                                                     
 
                                                       String errorMessage;
                                                       switch (e.error.code) {
@@ -503,13 +501,12 @@ class AppointmentCard extends StatelessWidget {
                                                         ),
                                                       );
                                                     } catch (e) {
+                                                      
                                                       Navigator.pop(
                                                         context,
                                                       ); // إغلاق loading dialog إذا كان مفتوحاً
 
-                                                      print(
-                                                        'General Error: $e',
-                                                      );
+                                                     
 
                                                       ScaffoldMessenger.of(
                                                         context,

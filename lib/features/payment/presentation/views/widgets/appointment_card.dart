@@ -463,8 +463,6 @@ class AppointmentCard extends StatelessWidget {
                                                     ) {
                                                       Navigator.pop(context);
 
-                                                     
-
                                                       String errorMessage;
                                                       switch (e.error.code) {
                                                         case FailureCode
@@ -501,12 +499,9 @@ class AppointmentCard extends StatelessWidget {
                                                         ),
                                                       );
                                                     } catch (e) {
-                                                      
                                                       Navigator.pop(
                                                         context,
                                                       ); // إغلاق loading dialog إذا كان مفتوحاً
-
-                                                     
 
                                                       ScaffoldMessenger.of(
                                                         context,

@@ -133,5 +133,9 @@
     "remaining": "المتبقي",
     "deposit_paid": "تم دفع العربون",
     "id": "الرقم التعريفي"
+  },
+  "notification": {
+    "notifications": "الإشعارات",
+    "no_notifications": "لا توجد إشعارات"
   }
 }

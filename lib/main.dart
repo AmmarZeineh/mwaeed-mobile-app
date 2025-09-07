@@ -17,6 +17,8 @@ import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dar
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
+import 'package:mwaeed_mobile_app/features/notification/domain/repos/notification_repo.dart';
+import 'package:mwaeed_mobile_app/features/notification/presentation/cubits/fetch_notification_cubit/fetch_notification_cubit.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
@@ -53,6 +55,10 @@ void main() async {
               BlocProvider(create: (context) => UserCubit()),
               BlocProvider(
                 create: (context) => ProfileCubit(getIt.get<ProfileRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    FetchNotificationCubit(getIt.get<NotificationRepo>()),
               ),
             ],
             child: MwaeedMobileApp(),

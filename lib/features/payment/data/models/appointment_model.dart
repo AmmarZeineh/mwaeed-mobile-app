@@ -90,7 +90,7 @@ class AppointmentModel {
     'updatedAt': updatedAt?.toIso8601String(),
   };
 
-  toEntity () {
+  toEntity() {
     return AppointmentEntity(
       id: id ?? 0,
       clientId: clientId ?? 0,

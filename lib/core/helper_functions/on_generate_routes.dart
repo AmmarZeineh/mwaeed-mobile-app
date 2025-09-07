@@ -5,6 +5,7 @@ import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.d
 import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
 import 'package:mwaeed_mobile_app/features/home/presentation/views/home_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/verify_view.dart';
+import 'package:mwaeed_mobile_app/features/notification/presentation/views/notification_view.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mwaeed_mobile_app/features/payment/presentation/views/appointments_view.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/views/profile_view.dart';
@@ -67,7 +68,8 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => ProfileView());
     case AppointmentsView.routeName:
       return MaterialPageRoute(builder: (_) => AppointmentsView());
-
+    case NotificationView.routeName:
+      return MaterialPageRoute(builder: (_) => const NotificationView());
     default:
       return MaterialPageRoute(builder: (_) => const Scaffold());
   }

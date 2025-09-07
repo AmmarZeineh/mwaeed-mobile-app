@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/features/booking/domain/repo/booking_repo.dart';
@@ -8,7 +10,6 @@ class ClientSecretCubit extends Cubit<ClientSecretState> {
   ClientSecretCubit(this._bookingRepo) : super(ClientSecretInitial());
 
   final BookingRepo _bookingRepo;
-  String? clientSecret;
 
   Future<void> fetchClientSecret({
     required BuildContext context,
@@ -26,8 +27,10 @@ class ClientSecretCubit extends Cubit<ClientSecretState> {
     result.fold((failure) => emit(ClientSecretFailure(failure.message)), (
       secret,
     ) {
-      clientSecret = secret;
-      emit(ClientSecretSuccess(secret));
+      String clientSecret = secret;
+      log(clientSecret);
+
+      emit(ClientSecretSuccess(clientSecret));
     });
   }
 }

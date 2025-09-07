@@ -7,4 +7,8 @@ abstract class PaymentRepo {
   Future<Either<Failure, List<AppointmentEntity>>> fetchAppointments({
     required BuildContext context,
   });
+  Future<Either<Failure, void>> cancelAppointment({
+    required BuildContext context,
+    required int appointmentId,
+  });
 }

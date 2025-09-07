@@ -36,7 +36,7 @@ class BookAppointmentView extends StatelessWidget {
                   CreateAppointmentCubit(getIt.get<BookingRepo>()),
             ),
           ],
-          child: BookAppoinmentViewBody(
+          child: BookAppointmentViewBody(
             job: job,
             providerEntity: providerEntity,
             services: services,

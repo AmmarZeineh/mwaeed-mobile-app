@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mwaeed_mobile_app/app_keys.dart';
 import 'package:mwaeed_mobile_app/constants.dart';
 import 'package:mwaeed_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:mwaeed_mobile_app/core/helper_functions/on_generate_routes.dart';
@@ -16,12 +17,11 @@ import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dar
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
-import 'package:mwaeed_mobile_app/features/booking/domain/repo/booking_repo.dart';
-import 'package:mwaeed_mobile_app/features/booking/presentation/cubits/client_secret_cubit/client_secret_cubit.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
 import 'package:mwaeed_mobile_app/firebase_options.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +31,8 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(
     NotificationService.firebaseMessaginhBackgroundHandler,
   );
+
+  Stripe.publishableKey = AppKeys.stripeKey;
   await NotificationService.initializeNotification();
   setupLocator();
   await ScreenUtil.ensureScreenSize();
@@ -48,7 +50,6 @@ void main() async {
         builder: (context, child) {
           return MultiBlocProvider(
             providers: [
-               BlocProvider(create: (context) => ClientSecretCubit(getIt.get<BookingRepo>())),
               BlocProvider(create: (context) => UserCubit()),
               BlocProvider(
                 create: (context) => ProfileCubit(getIt.get<ProfileRepo>()),

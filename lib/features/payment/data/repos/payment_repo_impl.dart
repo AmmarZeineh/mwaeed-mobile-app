@@ -31,4 +31,21 @@ class PaymentRepoImpl implements PaymentRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> cancelAppointment({
+    required BuildContext context,
+    required int appointmentId,
+  }) async {
+    try {
+      await _api.post(
+        url: '$baseUrl/appointment-cancellations',
+        token: context.read<UserCubit>().currentUser!.accessToken,
+        body: {"appointmentId": appointmentId, "reason": " "},
+      );
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

@@ -20,13 +20,15 @@
     "Verify": "Verify",
     "Verification_success": "Verification success",
     "Resend_available_in": "Resend available in",
-    "Code_resent": "Code resent",
+    "code_sent": "Code sent",
     "Enter_valid_code": "Enter valid code",
     "Resend_code": "Resend code",
     "do_you_have_an_account": "do you have an account ? ",
     "hi_welcome_back": "Hi, Welcome Back!",
     "hope_your_fine": " Hope you're doing fine",
     "dont_have_an_account": "don't have an account ? ",
+    "please_enter_your_email": "Please enter your email",
+    "please_enter_your_new_password": "Please enter your new password",
     "logout": "Logout"
   },
   "onboarding": {

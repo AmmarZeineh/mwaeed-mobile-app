@@ -22,13 +22,15 @@
     "Verify": "تأكيد",
     "Verification_success": "تم التحقق بنجاح",
     "Resend_available_in": "الارسال متاح بعد",
-    "Code_resent": "تم ارسال رمز التحقق مره اخرى",
+    "code_sent": "تم ارسال رمز التحقق مره اخرى",
     "Enter_valid_code": "ادخل رمز التحقق الصحيح",
     "Resend_code": "ارسل رمز التحقق مره اخرى",
     "do_you_have_an_account": " هل لديك حساب ؟",
     "hi_welcome_back": "مرحباً بك مرة اخرى",
     "hope_your_fine": "نتمنى ان تكون جيداً",
     "dont_have_an_account": " لا يوجد لديك حساب ؟",
+    "please_enter_your_email": "من فضلك ادخل بريدك الالكتروني",
+    "please_enter_your_new_password": "من فضلك ادخل كلمة المرور الجديدة",
     "logout": "تسجيل الخروج"
   },
   "onboarding": {

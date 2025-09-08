@@ -15,10 +15,7 @@ class VerifyView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.white),
       body: SafeArea(
-        child: BlocProvider(
-          create: (context) => VerifyCubit(getIt.get<AuthRepo>()),
-          child: VerifyViewBody(email: email),
-        ),
+        child: VerifyViewBody(email: email),
       ),
     );
   }

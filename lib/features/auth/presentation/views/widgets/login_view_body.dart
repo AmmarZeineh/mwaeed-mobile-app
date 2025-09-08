@@ -9,7 +9,9 @@ import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_images.dart';
 import 'package:mwaeed_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:mwaeed_mobile_app/core/widgets/custom_text_form_field.dart';
+import 'package:mwaeed_mobile_app/features/auth/domain/repos/auth_repo.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/cubits/login_cubit/login_cubit.dart';
+import 'package:mwaeed_mobile_app/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/signup_view.dart';
 
 class LoginViewBody extends StatefulWidget {
@@ -105,6 +107,20 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       ),
                     ],
                   ),
+                ),
+              ),
+              SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, ForgotPasswordView.routeName);
+                },
+                child: Text(
+                  "auth.forgot_password".tr(),
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],

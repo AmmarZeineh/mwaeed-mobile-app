@@ -103,4 +103,17 @@ class AuthRepoImpl implements AuthRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+  
+  @override
+  Future<Either<Failure, void>> forgotPassword({required String email, required String newPassword}) {
+    try {
+      return api.patch(
+        token: null,
+        url: '$baseUrl/user/forget-password',
+        body: {'email': email, 'newPassword': newPassword},
+      ).then((value) => Right(null));
+    } catch (e) {
+      return Future.value(Left(ServerFailure(e.toString())));
+    }
+  }
 }

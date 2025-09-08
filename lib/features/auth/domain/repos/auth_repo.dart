@@ -26,4 +26,10 @@ abstract class AuthRepo {
     required BuildContext context,
     required String fcmToken,
   });
+
+
+  Future<Either<Failure, void>> forgotPassword({
+    required String email,
+    required String newPassword,
+  });
 }

@@ -2,154 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mwaeed_mobile_app/core/helper_functions/snack_bars.dart';
+import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
+import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
+import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
 import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/edit_rating_cubit/edit_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/fetch_user_rating_cubit/fetch_user_rating_cubit.dart';
 
 // Import your existing styles and colors
-abstract class AppTextStyles {
-  static TextStyle w600_24 = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 24.sp,
-    color: Colors.black,
-  );
-  static TextStyle w600_12 = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 12.sp,
-    color: Colors.black,
-  );
-  static TextStyle w500_12 = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 12.sp,
-    color: Colors.black,
-  );
-  static TextStyle w700_30 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 30.sp,
-    color: Colors.black,
-  );
-  static TextStyle w500_14 = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 14.sp,
-    color: Colors.black,
-  );
-  static TextStyle w400_18 = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 18.sp,
-    color: Colors.black,
-  );
-  static TextStyle w600_18 = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 18.sp,
-    color: Colors.black,
-  );
-  static TextStyle w400_30 = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 30.sp,
-    color: Colors.black,
-  );
-  static TextStyle w400_14 = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 14.sp,
-    color: Colors.black,
-  );
-  static TextStyle w600_14 = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 14.sp,
-    color: Colors.black,
-  );
-  static TextStyle w700_14 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 14.sp,
-    color: Colors.black,
-  );
-  static TextStyle w500_24 = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 24.sp,
-    color: Colors.black,
-  );
-  static TextStyle w700_18 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 18.sp,
-    color: Colors.black,
-  );
-  static TextStyle w300_14 = TextStyle(
-    fontWeight: FontWeight.w300,
-    fontSize: 14.sp,
-    color: Colors.black,
-  );
-  static TextStyle w300_12 = TextStyle(
-    fontWeight: FontWeight.w300,
-    fontSize: 12.sp,
-    color: Colors.black,
-  );
-  static TextStyle w600_20 = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 20.sp,
-    color: Colors.black,
-  );
-  static TextStyle w700_16 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 16.sp,
-    color: Colors.black,
-  );
-  static TextStyle w400_16 = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 16.sp,
-    color: Colors.black,
-  );
-  static TextStyle w700_20 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 20.sp,
-    color: Colors.black,
-  );
-  static TextStyle w700_12 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 12.sp,
-    color: Colors.black,
-  );
-  static TextStyle w400_10 = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 10.sp,
-    color: Colors.black,
-  );
-  static TextStyle w700_36 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 36.sp,
-    color: Colors.black,
-  );
-  static TextStyle w700_24 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 24.sp,
-    color: Colors.black,
-  );
-  static TextStyle w400_12 = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 12.sp,
-    color: Colors.black,
-  );
-  static TextStyle w600_16 = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 16.sp,
-    color: Colors.black,
-  );
-  static TextStyle w800_16 = TextStyle(
-    fontWeight: FontWeight.w800,
-    fontSize: 16.sp,
-    color: Colors.black,
-  );
-  static TextStyle w500_16 = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 16.sp,
-    color: Colors.black,
-  );
-}
-
-abstract class AppColors {
-  static const Color primaryColor = Color(0xFF1C2A3A);
-  static const Color secondaryColor = Color(0xFFFFFFFF);
-}
 
 class EditRatingDialog extends StatefulWidget {
-  final String providerName;
+  final ProviderEntity providerEntitiy;
   final String? providerImage;
   final int currentRating;
   final String currentComment;
@@ -158,7 +20,7 @@ class EditRatingDialog extends StatefulWidget {
 
   const EditRatingDialog({
     super.key,
-    required this.providerName,
+    required this.providerEntitiy,
     this.providerImage,
     required this.currentRating,
     required this.currentComment,
@@ -232,6 +94,12 @@ class _EditRatingDialogState extends State<EditRatingDialog> {
       child: BlocConsumer<EditRatingCubit, EditRatingState>(
         listener: (context, state) {
           if (state is EditRatingSuccess) {
+            context
+                .read<FetchUserRatingCubit>()
+                .getUserRatingForSpicificProvider(
+                  providerId: widget.providerEntitiy.id,
+                  context: context,
+                );
             showSuccessMessage('Rating Edited Successfully', context);
           } else if (state is EditRatingFailure) {
             showErrorMessage(state.errMessage, context);
@@ -303,7 +171,10 @@ class _EditRatingDialogState extends State<EditRatingDialog> {
                             : null,
                       ),
                       SizedBox(height: 10.h),
-                      Text(widget.providerName, style: AppTextStyles.w600_18),
+                      Text(
+                        widget.providerEntitiy.name,
+                        style: AppTextStyles.w600_18,
+                      ),
                       SizedBox(height: 5.h),
                       Text(
                         'Update your experience with this provider',
@@ -436,8 +307,8 @@ class _EditRatingDialogState extends State<EditRatingDialog> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: _rating > 0
-                              ? () {
-                                  widget.onUpdate(
+                              ? () async {
+                                  await widget.onUpdate(
                                     _rating,
                                     _commentController.text.trim(),
                                   );

@@ -25,6 +25,7 @@ import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_c
 import 'package:mwaeed_mobile_app/features/rating/domain/repos/rating_repo.dart';
 import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/add_rating_cubit/add_rating_cubit.dart';
 import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/edit_rating_cubit/edit_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/fetch_user_rating_cubit/fetch_user_rating_cubit.dart';
 import 'package:mwaeed_mobile_app/firebase_options.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
@@ -68,6 +69,10 @@ void main() async {
               ),
               BlocProvider(
                 create: (context) => EditRatingCubit(getIt.get<RatingRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    FetchUserRatingCubit(getIt.get<RatingRepo>()),
               ),
             ],
             child: MwaeedMobileApp(),

@@ -69,7 +69,7 @@ class RatingItemWidget extends StatelessWidget {
                               showDialog(
                                 context: context,
                                 builder: (context) => EditRatingDialog(
-                                  providerName: rating.providerEntity.name,
+                                  providerEntitiy: rating.providerEntity,
                                   currentRating: rating.score,
                                   currentComment: rating.comment,
                                   onUpdate: (score, comment) {

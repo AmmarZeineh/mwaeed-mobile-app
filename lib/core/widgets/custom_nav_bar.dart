@@ -50,6 +50,12 @@ class CustomBottomNavBarWithBadge extends StatelessWidget {
             ),
             _buildNavItemWithBadge(
               index: 2,
+              icon: Icons.favorite,
+              activeIcon: Icons.favorite_border_outlined,
+              label: 'nav.favorite'.tr(),
+            ),
+            _buildNavItemWithBadge(
+              index: 3,
               icon: Icons.person_outline,
               activeIcon: Icons.person,
               label: 'nav.profile'.tr(),

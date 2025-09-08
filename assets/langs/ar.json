@@ -98,7 +98,8 @@
   "nav": {
     "home": "الصفحة الرئيسية",
     "profile": "الملف الشخصي",
-    "appointments": "المواعيد"
+    "appointments": "المواعيد",
+    "favorite": "المفضلة"
   },
   "profile": {
     "personal_info": "المعلومات الشخصية",

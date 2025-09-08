@@ -17,6 +17,9 @@ import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dar
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
 import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
+import 'package:mwaeed_mobile_app/features/favorite/domain/repos/favorite_repo.dart';
+import 'package:mwaeed_mobile_app/features/favorite/presentation/cubits/favorite_cubit/add_favorite_cubit.dart';
+import 'package:mwaeed_mobile_app/features/favorite/presentation/cubits/fetch_favorite_cubit/fetch_favorite_cubit.dart';
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
@@ -53,6 +56,14 @@ void main() async {
               BlocProvider(create: (context) => UserCubit()),
               BlocProvider(
                 create: (context) => ProfileCubit(getIt.get<ProfileRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    FetchFavoriteCubit(getIt.get<FavoriteRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    AddFavoriteCubit(getIt.get<FavoriteRepo>()),
               ),
             ],
             child: MwaeedMobileApp(),

@@ -96,7 +96,8 @@
   "nav": {
     "home": "Home",
     "profile": "Profile",
-    "appointments": "Appointments"
+    "appointments": "Appointments",
+    "favorite":"Favorite"
   },
   "profile": {
     "personal_info": "Personal information",

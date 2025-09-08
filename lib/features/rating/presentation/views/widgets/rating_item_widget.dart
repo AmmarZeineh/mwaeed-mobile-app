@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mwaeed_mobile_app/core/helper_classes/date_helper.dart';
 import 'package:mwaeed_mobile_app/features/payment/domain/entities/appointment_entity.dart';
 import 'package:mwaeed_mobile_app/features/rating/domain/entities/rating_entity.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/cubit/delete_rating_cubit.dart';
 import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/edit_rating_cubit/edit_rating_cubit.dart';
 import 'package:mwaeed_mobile_app/features/rating/presentation/views/widgets/edit_rating_dialog.dart';
 
@@ -72,17 +73,26 @@ class RatingItemWidget extends StatelessWidget {
                                   providerEntitiy: rating.providerEntity,
                                   currentRating: rating.score,
                                   currentComment: rating.comment,
-                                  onUpdate: (score, comment) {
-                                    context.read<EditRatingCubit>().editRating(
-                                      ratingId: rating.id,
-                                      context: context,
-                                      providerId: rating.providerEntity.id,
-                                      appointmentId: appointmentEntity!.id,
-                                      rating: score,
-                                      comment: comment,
-                                    );
+                                  onUpdate: (score, comment) async {
+                                    await context
+                                        .read<EditRatingCubit>()
+                                        .editRating(
+                                          ratingId: rating.id,
+                                          context: context,
+                                          providerId: rating.providerEntity.id,
+                                          appointmentId: appointmentEntity!.id,
+                                          rating: score,
+                                          comment: comment,
+                                        );
                                   },
-                                  onDelete: () {},
+                                  onDelete: () async {
+                                    await context
+                                        .read<DeleteRatingCubit>()
+                                        .deleteRating(
+                                          ratingId: rating.id,
+                                          context: context,
+                                        );
+                                  },
                                 ),
                               );
                             },

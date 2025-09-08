@@ -5,6 +5,7 @@ import 'package:mwaeed_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/cubit/delete_rating_cubit.dart';
 import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/edit_rating_cubit/edit_rating_cubit.dart';
 import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/fetch_user_rating_cubit/fetch_user_rating_cubit.dart';
 
@@ -91,251 +92,278 @@ class _EditRatingDialogState extends State<EditRatingDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
-      child: BlocConsumer<EditRatingCubit, EditRatingState>(
+      child: BlocConsumer<DeleteRatingCubit, DeleteRatingState>(
         listener: (context, state) {
-          if (state is EditRatingSuccess) {
+          if (state is DeleteRatingSuccess) {
             context
                 .read<FetchUserRatingCubit>()
                 .getUserRatingForSpicificProvider(
                   providerId: widget.providerEntitiy.id,
                   context: context,
                 );
-            showSuccessMessage('Rating Edited Successfully', context);
-          } else if (state is EditRatingFailure) {
+            showSuccessMessage('Rating Deleted Successfully', context);
+          } else if (state is DeleteRatingFailure) {
             showErrorMessage(state.errMessage, context);
           }
         },
         builder: (context, state) {
-          if (state is EditRatingLoading) {
+          if (state is DeleteRatingLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          return SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.all(20.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.r),
-                color: AppColors.secondaryColor,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Header
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return BlocConsumer<EditRatingCubit, EditRatingState>(
+            listener: (context, state) {
+              if (state is EditRatingSuccess) {
+                context
+                    .read<FetchUserRatingCubit>()
+                    .getUserRatingForSpicificProvider(
+                      providerId: widget.providerEntitiy.id,
+                      context: context,
+                    );
+                showSuccessMessage('Rating Edited Successfully', context);
+              } else if (state is EditRatingFailure) {
+                showErrorMessage(state.errMessage, context);
+              }
+            },
+            builder: (context, state) {
+              if (state is EditRatingLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.all(20.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.r),
+                    color: AppColors.secondaryColor,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Edit Rating', style: AppTextStyles.w600_20),
+                      // Header
                       Row(
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Delete Button
-                          IconButton(
-                            onPressed: _showDeleteConfirmation,
-                            icon: Icon(
-                              Icons.delete_outline,
-                              color: Colors.red,
-                              size: 24.sp,
-                            ),
-                            tooltip: 'Delete Rating',
+                          Text('Edit Rating', style: AppTextStyles.w600_20),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Delete Button
+                              IconButton(
+                                onPressed: _showDeleteConfirmation,
+                                icon: Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.red,
+                                  size: 24.sp,
+                                ),
+                                tooltip: 'Delete Rating',
+                              ),
+                              // Close Button
+                              IconButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                icon: Icon(
+                                  Icons.close,
+                                  color: Colors.grey,
+                                  size: 24.sp,
+                                ),
+                              ),
+                            ],
                           ),
-                          // Close Button
-                          IconButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            icon: Icon(
-                              Icons.close,
+                        ],
+                      ),
+
+                      SizedBox(height: 20.h),
+
+                      // Provider Info
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.grey[200],
+                            radius: 40.r,
+                            backgroundImage: widget.providerImage != null
+                                ? NetworkImage(widget.providerImage!)
+                                : null,
+                            child: widget.providerImage == null
+                                ? Icon(
+                                    Icons.person,
+                                    size: 40.sp,
+                                    color: Colors.grey,
+                                  )
+                                : null,
+                          ),
+                          SizedBox(height: 10.h),
+                          Text(
+                            widget.providerEntitiy.name,
+                            style: AppTextStyles.w600_18,
+                          ),
+                          SizedBox(height: 5.h),
+                          Text(
+                            'Update your experience with this provider',
+                            style: AppTextStyles.w400_14.copyWith(
                               color: Colors.grey,
-                              size: 24.sp,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 30.h),
+
+                      // Current Rating Display
+                      Container(
+                        padding: EdgeInsets.all(12.w),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Current Rating',
+                              style: AppTextStyles.w500_12.copyWith(
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            SizedBox(height: 5.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: List.generate(5, (index) {
+                                return Icon(
+                                  index < widget.currentRating
+                                      ? Icons.star
+                                      : Icons.star_border,
+                                  size: 20.sp,
+                                  color: index < widget.currentRating
+                                      ? Colors.amber
+                                      : Colors.grey,
+                                );
+                              }),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 20.h),
+
+                      // New Rating Stars
+                      Text('New Rating', style: AppTextStyles.w500_14),
+                      SizedBox(height: 10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(5, (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _rating = index + 1;
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 4.w),
+                              child: Icon(
+                                index < _rating
+                                    ? Icons.star
+                                    : Icons.star_border,
+                                size: 40.sp,
+                                color: index < _rating
+                                    ? Colors.amber
+                                    : Colors.grey,
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+
+                      SizedBox(height: 10.h),
+
+                      // Rating Text
+                      Text(
+                        _getRatingText(_rating),
+                        style: AppTextStyles.w500_16,
+                      ),
+
+                      SizedBox(height: 25.h),
+
+                      // Comment TextField
+                      TextField(
+                        controller: _commentController,
+                        maxLines: 4,
+                        decoration: InputDecoration(
+                          hintText: 'Update your comment (optional)',
+                          hintStyle: AppTextStyles.w400_14.copyWith(
+                            color: Colors.grey,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                            borderSide: BorderSide(
+                              color: AppColors.primaryColor,
+                              width: 2,
+                            ),
+                          ),
+                          contentPadding: EdgeInsets.all(15.w),
+                        ),
+                        style: AppTextStyles.w400_14,
+                      ),
+
+                      SizedBox(height: 25.h),
+
+                      // Action Buttons
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 15.h),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  side: const BorderSide(color: Colors.grey),
+                                ),
+                              ),
+                              child: Text(
+                                'Cancel',
+                                style: AppTextStyles.w500_16.copyWith(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 15.w),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: _rating > 0
+                                  ? () async {
+                                      await widget.onUpdate(
+                                        _rating,
+                                        _commentController.text.trim(),
+                                      );
+                                      Navigator.of(context).pop();
+                                    }
+                                  : null,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor,
+                                padding: EdgeInsets.symmetric(vertical: 15.h),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                                disabledBackgroundColor: Colors.grey.shade300,
+                              ),
+                              child: Text(
+                                'Update Rating',
+                                style: AppTextStyles.w500_16.copyWith(
+                                  color: AppColors.secondaryColor,
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ],
                   ),
-
-                  SizedBox(height: 20.h),
-
-                  // Provider Info
-                  Column(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.grey[200],
-                        radius: 40.r,
-                        backgroundImage: widget.providerImage != null
-                            ? NetworkImage(widget.providerImage!)
-                            : null,
-                        child: widget.providerImage == null
-                            ? Icon(
-                                Icons.person,
-                                size: 40.sp,
-                                color: Colors.grey,
-                              )
-                            : null,
-                      ),
-                      SizedBox(height: 10.h),
-                      Text(
-                        widget.providerEntitiy.name,
-                        style: AppTextStyles.w600_18,
-                      ),
-                      SizedBox(height: 5.h),
-                      Text(
-                        'Update your experience with this provider',
-                        style: AppTextStyles.w400_14.copyWith(
-                          color: Colors.grey,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 30.h),
-
-                  // Current Rating Display
-                  Container(
-                    padding: EdgeInsets.all(12.w),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Current Rating',
-                          style: AppTextStyles.w500_12.copyWith(
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        SizedBox(height: 5.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(5, (index) {
-                            return Icon(
-                              index < widget.currentRating
-                                  ? Icons.star
-                                  : Icons.star_border,
-                              size: 20.sp,
-                              color: index < widget.currentRating
-                                  ? Colors.amber
-                                  : Colors.grey,
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(height: 20.h),
-
-                  // New Rating Stars
-                  Text('New Rating', style: AppTextStyles.w500_14),
-                  SizedBox(height: 10.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(5, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _rating = index + 1;
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 4.w),
-                          child: Icon(
-                            index < _rating ? Icons.star : Icons.star_border,
-                            size: 40.sp,
-                            color: index < _rating ? Colors.amber : Colors.grey,
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-
-                  SizedBox(height: 10.h),
-
-                  // Rating Text
-                  Text(_getRatingText(_rating), style: AppTextStyles.w500_16),
-
-                  SizedBox(height: 25.h),
-
-                  // Comment TextField
-                  TextField(
-                    controller: _commentController,
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                      hintText: 'Update your comment (optional)',
-                      hintStyle: AppTextStyles.w400_14.copyWith(
-                        color: Colors.grey,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                        borderSide: BorderSide(
-                          color: AppColors.primaryColor,
-                          width: 2,
-                        ),
-                      ),
-                      contentPadding: EdgeInsets.all(15.w),
-                    ),
-                    style: AppTextStyles.w400_14,
-                  ),
-
-                  SizedBox(height: 25.h),
-
-                  // Action Buttons
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 15.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                              side: const BorderSide(color: Colors.grey),
-                            ),
-                          ),
-                          child: Text(
-                            'Cancel',
-                            style: AppTextStyles.w500_16.copyWith(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 15.w),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: _rating > 0
-                              ? () async {
-                                  await widget.onUpdate(
-                                    _rating,
-                                    _commentController.text.trim(),
-                                  );
-                                  Navigator.of(context).pop();
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
-                            padding: EdgeInsets.symmetric(vertical: 15.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            disabledBackgroundColor: Colors.grey.shade300,
-                          ),
-                          child: Text(
-                            'Update Rating',
-                            style: AppTextStyles.w500_16.copyWith(
-                              color: AppColors.secondaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           );
         },
       ),

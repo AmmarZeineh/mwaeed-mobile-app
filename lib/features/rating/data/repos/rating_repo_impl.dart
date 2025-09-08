@@ -40,20 +40,17 @@ class RatingRepoImpl implements RatingRepo {
   }
 
   @override
-  Future<Either<Failure, RatingEntity>> getUserRatingForSpicificProvider({
+  Future<Either<Failure, RatingEntity?>> getUserRatingForSpicificProvider({
     required BuildContext context,
     required int providerId,
   }) async {
     try {
-      return await _api
-          .get(
-            url:
-                '$baseUrl/ratings/client/${context.read<UserCubit>().currentUser!.id}/provider/$providerId',
-            token: context.read<UserCubit>().currentUser!.accessToken,
-          )
-          .then((response) {
-            return Right(RatingModel.fromJson(response).toEntity());
-          });
+      var data = await _api.get(
+        url:
+            '$baseUrl/ratings/client/${context.read<UserCubit>().currentUser!.id}/provider/$providerId',
+        token: context.read<UserCubit>().currentUser!.accessToken,
+      );
+      return Right(data.isEmpty ? null : RatingModel.fromJson(data).toEntity());
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -78,6 +75,22 @@ class RatingRepoImpl implements RatingRepo {
           "providerId": providerId,
           "appointmentId": appointmentId,
         },
+      );
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteRating({
+    required BuildContext context,
+    required int ratingId,
+  }) async {
+    try {
+      await _api.delete(
+        url: '$baseUrl/ratings/$ratingId',
+        token: context.read<UserCubit>().currentUser!.accessToken,
       );
       return Right(null);
     } catch (e) {

@@ -11,7 +11,7 @@ abstract class RatingRepo {
     required int rating,
     required String? comment,
   });
-  Future<Either<Failure, RatingEntity>> getUserRatingForSpicificProvider({
+  Future<Either<Failure, RatingEntity?>> getUserRatingForSpicificProvider({
     required BuildContext context,
     required int providerId,
   });
@@ -24,5 +24,10 @@ abstract class RatingRepo {
     required int ratingId,
 
     required String? comment,
+  });
+
+  Future<Either<Failure, void>> deleteRating({
+    required BuildContext context,
+    required int ratingId,
   });
 }

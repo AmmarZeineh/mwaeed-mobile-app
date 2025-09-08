@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:mwaeed_mobile_app/features/notification/domain/repos/notification_repo.dart';
 
 part 'mark_as_read_state.dart';

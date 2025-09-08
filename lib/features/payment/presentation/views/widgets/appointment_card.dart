@@ -13,6 +13,8 @@ import 'package:mwaeed_mobile_app/features/payment/domain/entities/appointment_e
 import 'package:mwaeed_mobile_app/features/payment/domain/repos/payment_repo.dart';
 import 'package:mwaeed_mobile_app/features/payment/presentation/cubits/cancel_appointment_cubit/cancel_appointment_cubit.dart';
 import 'package:mwaeed_mobile_app/features/payment/presentation/cubits/fetch_appointments_cubit/fetch_appointments_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/add_rating_cubit/add_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/views/widgets/rating_dialog.dart';
 
 class AppointmentCard extends StatelessWidget {
   final AppointmentEntity appointment;
@@ -385,139 +387,10 @@ class AppointmentCard extends StatelessWidget {
                                                 return CustomElevatedButton(
                                                   title: 'pay.pay'.tr(),
                                                   onPressed: () async {
-                                                    showDialog(
-                                                      context: context,
-                                                      barrierDismissible: false,
-                                                      builder: (context) => AlertDialog(
-                                                        content: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            CircularProgressIndicator(),
-                                                            SizedBox(
-                                                              height: 16,
-                                                            ),
-                                                            Text(
-                                                              'جاري تحضير الدفع...',
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
+                                                    await _handlePayment(
+                                                      context,
+                                                      state,
                                                     );
-                                                    try {
-                                                      // 2. تهيئة Payment Sheet
-                                                      await Stripe.instance.initPaymentSheet(
-                                                        paymentSheetParameters: SetupPaymentSheetParameters(
-                                                          paymentIntentClientSecret:
-                                                              state
-                                                                  .clientSecret,
-                                                          merchantDisplayName:
-                                                              "Mwaeed",
-                                                          style:
-                                                              ThemeMode.light,
-                                                          appearance: PaymentSheetAppearance(
-                                                            colors:
-                                                                PaymentSheetAppearanceColors(
-                                                                  primary:
-                                                                      Colors
-                                                                          .blue,
-                                                                ),
-                                                          ),
-                                                          // إضافة billing details إذا كانت متوفرة
-                                                          customerId:
-                                                              null, // أضف customer ID إذا كان متوفراً
-                                                          customerEphemeralKeySecret:
-                                                              null, // أضف ephemeral key إذا كان متوفراً
-                                                          setupIntentClientSecret:
-                                                              null,
-                                                          allowsDelayedPaymentMethods:
-                                                              true,
-                                                        ),
-                                                      );
-
-                                                      Navigator.pop(
-                                                        context,
-                                                      ); // إغلاق loading dialog
-
-                                                      // 3. عرض Payment Sheet
-                                                      await Stripe.instance
-                                                          .presentPaymentSheet();
-                                                      Navigator.pop(context);
-                                                      // 4. الدفع نجح - تحديث حالة الموعد
-                                                      ScaffoldMessenger.of(
-                                                        context,
-                                                      ).showSnackBar(
-                                                        const SnackBar(
-                                                          content: Text(
-                                                            "✅ تم الدفع بنجاح",
-                                                          ),
-                                                          backgroundColor:
-                                                              Colors.green,
-                                                          duration: Duration(
-                                                            seconds: 3,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    } on StripeException catch (
-                                                      e
-                                                    ) {
-                                                      Navigator.pop(context);
-
-                                                      String errorMessage;
-                                                      switch (e.error.code) {
-                                                        case FailureCode
-                                                            .Canceled:
-                                                          errorMessage =
-                                                              "تم إلغاء عملية الدفع";
-                                                          break;
-                                                        case FailureCode.Failed:
-                                                          errorMessage =
-                                                              "فشل في عملية الدفع";
-                                                          break;
-                                                        case FailureCode
-                                                            .Timeout:
-                                                          errorMessage =
-                                                              "انتهت مهلة الدفع";
-                                                          break;
-                                                        default:
-                                                          errorMessage =
-                                                              "خطأ في الدفع: ${e.error.localizedMessage ?? 'خطأ غير معروف'}";
-                                                      }
-
-                                                      ScaffoldMessenger.of(
-                                                        context,
-                                                      ).showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            errorMessage,
-                                                          ),
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                          duration: Duration(
-                                                            seconds: 4,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    } catch (e) {
-                                                      Navigator.pop(
-                                                        context,
-                                                      ); // إغلاق loading dialog إذا كان مفتوحاً
-
-                                                      ScaffoldMessenger.of(
-                                                        context,
-                                                      ).showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            "خطأ عام: $e",
-                                                          ),
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                          duration: Duration(
-                                                            seconds: 4,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
                                                   },
                                                 );
                                               }
@@ -551,13 +424,78 @@ class AppointmentCard extends StatelessWidget {
                               ),
                             ),
                           ),
+
+                        if (appointment.status == 'COMPLETED')
+                          BlocBuilder<AddRatingCubit, AddRatingState>(
+                            builder: (context, state) {
+                              if (state is AddRatingFailure) {
+                                return Center(child: Text(state.errMessage));
+                              } else if (state is AddRatingLoading) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (state is AddRatingSuccess) {
+                                return Text('Rating added successfully');
+                              }
+                              return Column(
+                                children: [
+                                  SizedBox(height: 12),
+                                  GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => RatingDialog(
+                                          providerName: appointment.providerId
+                                              .toString(),
+                                          onSubmit:
+                                              (
+                                                int rating,
+                                                String comment,
+                                              ) async {
+                                                await context
+                                                    .read<AddRatingCubit>()
+                                                    .submitRating(
+                                                      appointmentId:
+                                                          appointment.id,
+                                                      providerId: appointment
+                                                          .providerId,
+                                                      rating: rating,
+                                                      comment: comment,
+                                                      context: context,
+                                                    );
+                                              },
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 16.w,
+                                        vertical: 8.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius: BorderRadius.circular(
+                                          12.r,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'appointments.leave_review'.tr(),
+                                        style: AppTextStyles.w600_12.copyWith(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
                       ],
                     ),
                   ),
 
             SizedBox(height: 8.h),
 
-            // Footer with ID and created date
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -579,6 +517,94 @@ class AppointmentCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _handlePayment(
+    BuildContext context,
+    ClientSecretSuccess state,
+  ) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 16),
+            Text('جاري تحضير الدفع...'),
+          ],
+        ),
+      ),
+    );
+    try {
+      // 2. تهيئة Payment Sheet
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: state.clientSecret,
+          merchantDisplayName: "Mwaeed",
+          style: ThemeMode.light,
+          appearance: PaymentSheetAppearance(
+            colors: PaymentSheetAppearanceColors(primary: Colors.blue),
+          ),
+          // إضافة billing details إذا كانت متوفرة
+          customerId: null, // أضف customer ID إذا كان متوفراً
+          customerEphemeralKeySecret: null, // أضف ephemeral key إذا كان متوفراً
+          setupIntentClientSecret: null,
+          allowsDelayedPaymentMethods: true,
+        ),
+      );
+
+      Navigator.pop(context); // إغلاق loading dialog
+
+      // 3. عرض Payment Sheet
+      await Stripe.instance.presentPaymentSheet();
+      Navigator.pop(context);
+      // 4. الدفع نجح - تحديث حالة الموعد
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("✅ تم الدفع بنجاح"),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } on StripeException catch (e) {
+      Navigator.pop(context);
+
+      String errorMessage;
+      switch (e.error.code) {
+        case FailureCode.Canceled:
+          errorMessage = "تم إلغاء عملية الدفع";
+          break;
+        case FailureCode.Failed:
+          errorMessage = "فشل في عملية الدفع";
+          break;
+        case FailureCode.Timeout:
+          errorMessage = "انتهت مهلة الدفع";
+          break;
+        default:
+          errorMessage =
+              "خطأ في الدفع: ${e.error.localizedMessage ?? 'خطأ غير معروف'}";
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 4),
+        ),
+      );
+    } catch (e) {
+      Navigator.pop(context); // إغلاق loading dialog إذا كان مفتوحاً
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("خطأ عام: $e"),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 4),
+        ),
+      );
+    }
   }
 
   Widget _buildInfoItem({

@@ -22,6 +22,8 @@ import 'package:mwaeed_mobile_app/features/notification/presentation/cubits/fetc
 import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/domain/repos/rating_repo.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/add_rating_cubit/add_rating_cubit.dart';
 import 'package:mwaeed_mobile_app/firebase_options.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
@@ -59,6 +61,9 @@ void main() async {
               BlocProvider(
                 create: (context) =>
                     FetchNotificationCubit(getIt.get<NotificationRepo>()),
+              ),
+              BlocProvider(
+                create: (context) => AddRatingCubit(getIt.get<RatingRepo>()),
               ),
             ],
             child: MwaeedMobileApp(),

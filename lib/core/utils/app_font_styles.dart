@@ -7,6 +7,11 @@ abstract class AppTextStyles {
     fontSize: 24.sp,
     color: Colors.black,
   );
+  static TextStyle w500_16 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 16.sp,
+    color: Colors.black,
+  );
   static TextStyle w600_12 = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 12.sp,

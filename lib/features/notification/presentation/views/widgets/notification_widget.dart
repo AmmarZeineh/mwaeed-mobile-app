@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:mwaeed_mobile_app/features/notification/domain/entities/notification_entity.dart';
+import 'package:mwaeed_mobile_app/features/notification/presentation/cubits/fetch_notification_cubit/fetch_notification_cubit.dart';
+import 'package:mwaeed_mobile_app/features/notification/presentation/cubits/mark_as_read_cubit/mark_as_read_cubit.dart';
 
 class NotificationWidget extends StatelessWidget {
   const NotificationWidget({super.key, required this.notification});
@@ -28,16 +31,26 @@ class NotificationWidget extends StatelessWidget {
               ),
             ),
             Spacer(),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.check, color: Colors.green),
-              ),
-            ),
+            notification.isRead == true
+                ? Container()
+                : Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: IconButton(
+                      onPressed: () async {
+                        await context.read<MarkAsReadCubit>().markAsRead(
+                          context: context,
+                          notificationId: notification.id!,
+                        );
+                        context
+                            .read<FetchNotificationCubit>()
+                            .fetchNotifications(context: context);
+                      },
+                      icon: Icon(Icons.check, color: Colors.green),
+                    ),
+                  ),
           ],
         ),
       ),

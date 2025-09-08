@@ -31,4 +31,20 @@ class NotificationRepoImpl implements NotificationRepo {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> markAsRead({
+    required BuildContext context,
+    required int notificationId,
+  }) async {
+    try {
+      await _api.patch(
+        url: '$baseUrl/test-notification/$notificationId/read',
+        token: context.read<UserCubit>().currentUser!.accessToken,
+      );
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

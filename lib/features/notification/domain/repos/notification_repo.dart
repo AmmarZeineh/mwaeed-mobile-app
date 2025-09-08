@@ -7,4 +7,9 @@ abstract class NotificationRepo {
   Future<Either<Failure, List<NotificationEntity>>> getNotifications({
     required BuildContext context,
   });
+
+  Future<Either<Failure, void>> markAsRead({
+    required BuildContext context,
+    required int notificationId,
+  });
 }

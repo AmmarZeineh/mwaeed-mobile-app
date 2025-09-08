@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 import 'package:mwaeed_mobile_app/features/booking/presentation/views/provider_details.dart';
+import 'package:mwaeed_mobile_app/features/favorite/presentation/cubits/favorite_cubit/add_favorite_cubit.dart';
 import 'package:mwaeed_mobile_app/features/home/domain/entities/provider_entity.dart';
 
 class HomeProviderContainer extends StatelessWidget {
@@ -111,14 +113,29 @@ class HomeProviderContainer extends StatelessWidget {
                       ],
                     ),
                   ),
+                  BlocBuilder<AddFavoriteCubit, AddFavoriteState>(
+                    builder: (context, state) {
+                      bool isFavorite = false;
 
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite_border, // تغيير إلى favorite_border
-                      color: Colors.red,
-                      size: 24,
-                    ),
+                      if (state is AddFavoriteSuccess) {
+                        isFavorite = state.isFavorite;
+                      }
+
+                      return IconButton(
+                        onPressed: () {
+                          context.read<AddFavoriteCubit>().toggleFavorite(
+                            providerId: providerEntity.id, // حط الـ id المناسب
+                            context: context,
+                            isFavorite: isFavorite,
+                          );
+                        },
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: Colors.red,
+                          size: 24,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

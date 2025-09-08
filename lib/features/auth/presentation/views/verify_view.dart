@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mwaeed_mobile_app/core/services/get_it_service.dart';
-import 'package:mwaeed_mobile_app/features/auth/domain/repos/auth_repo.dart';
-import 'package:mwaeed_mobile_app/features/auth/presentation/cubits/verify_cubit/verify_cubit.dart';
 import 'package:mwaeed_mobile_app/features/auth/presentation/views/widgets/verify_view_body.dart';
 
 class VerifyView extends StatelessWidget {

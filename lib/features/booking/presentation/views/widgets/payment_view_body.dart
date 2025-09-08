@@ -136,7 +136,7 @@ class _PaymentViewBodyState extends State<PaymentViewBody> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2C3E50).withOpacity(0.1),
+                  color: const Color(0xFF2C3E50).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -365,6 +365,7 @@ class _PaymentViewBodyState extends State<PaymentViewBody> {
     setState(() => _isProcessing = false);
 
     showDialog(
+      // ignore: use_build_context_synchronously
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Payment Successful'),

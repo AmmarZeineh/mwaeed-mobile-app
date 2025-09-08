@@ -64,6 +64,7 @@ class ProviderDetailsViewBody extends StatelessWidget {
 
                   if (selectedJob != null) {
                     Navigator.pushNamed(
+                      // ignore: use_build_context_synchronously
                       context,
                       BookAppointmentView.routeName,
                       arguments: {

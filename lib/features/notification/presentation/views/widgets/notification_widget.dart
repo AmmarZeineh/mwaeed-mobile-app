@@ -44,8 +44,10 @@ class NotificationWidget extends StatelessWidget {
                           context: context,
                           notificationId: notification.id!,
                         );
+                        // ignore: use_build_context_synchronously
                         context
                             .read<FetchNotificationCubit>()
+                            // ignore: use_build_context_synchronously
                             .fetchNotifications(context: context);
                       },
                       icon: Icon(Icons.check, color: Colors.green),

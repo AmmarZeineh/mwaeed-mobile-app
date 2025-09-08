@@ -338,6 +338,7 @@ class _EditRatingDialogState extends State<EditRatingDialog> {
                                         _rating,
                                         _commentController.text.trim(),
                                       );
+                                      // ignore: use_build_context_synchronously
                                       Navigator.of(context).pop();
                                     }
                                   : null,

@@ -12,7 +12,7 @@ class ProviderCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Card(
-        color: AppColors.primaryColor.withOpacity(.5),
+        color: AppColors.primaryColor.withValues(alpha: .5),
         child: Row(
           children: [
             Container(

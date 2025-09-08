@@ -39,7 +39,7 @@ class ServiceCard extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -64,7 +64,7 @@ class ServiceCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 color: isSelected
-                    ? Colors.white.withOpacity(0.8)
+                    ? Colors.white.withValues(alpha: 0.8)
                     : Colors.grey[600],
               ),
               maxLines: 2,
@@ -81,7 +81,7 @@ class ServiceCard extends StatelessWidget {
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: isSelected
-                        ? Colors.white.withOpacity(0.9)
+                        ? Colors.white.withValues(alpha: 0.9)
                         : Colors.grey[700],
                   ),
                 ),
@@ -105,7 +105,7 @@ class ServiceCard extends StatelessWidget {
                           fontSize: 10,
                           fontWeight: FontWeight.w500,
                           color: isSelected
-                              ? Colors.white.withOpacity(0.8)
+                              ? Colors.white.withValues(alpha: 0.8)
                               : Colors.orange[600],
                         ),
                       ),

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
 
 part 'change_password_state.dart';

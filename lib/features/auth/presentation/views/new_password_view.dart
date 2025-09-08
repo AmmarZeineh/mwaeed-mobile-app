@@ -131,6 +131,7 @@ class _NewPasswordViewBodyState extends State<NewPasswordViewBody> {
 
                               // نفذ الاستدعاء بشكل async بدون ما تخلي onPressed async
                               Future.microtask(() async {
+                                // ignore: use_build_context_synchronously
                                 await context
                                     .read<NewPasswordCubit>()
                                     .newPassword(

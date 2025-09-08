@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mwaeed_mobile_app/core/utils/app_font_styles.dart';
 
 // إضافة enum لحالات المواعيد
+// ignore: constant_identifier_names
 enum AppointmentStatus { PENDING, CONFIRMED, CANCELLED, COMPLETED }
 
 class AppointmentSegmentButtons extends StatefulWidget {
@@ -47,13 +48,13 @@ class _AppointmentSegmentButtonsState extends State<AppointmentSegmentButtons> {
   Color _getBorderColor(AppointmentStatus status) {
     switch (status) {
       case AppointmentStatus.PENDING:
-        return Colors.orange.withOpacity(0.15);
+        return Colors.orange.withValues(alpha: 0.15);
       case AppointmentStatus.CONFIRMED:
-        return Colors.green.withOpacity(0.15);
+        return Colors.green.withValues(alpha: 0.15);
       case AppointmentStatus.CANCELLED:
-        return Colors.red.withOpacity(0.15);
+        return Colors.red.withValues(alpha: 0.15);
       case AppointmentStatus.COMPLETED:
-        return Colors.blue.withOpacity(0.15);
+        return Colors.blue.withValues(alpha: 0.15);
     }
   }
 

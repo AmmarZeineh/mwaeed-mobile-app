@@ -104,13 +104,13 @@ class _AppointmentCardState extends State<AppointmentCard> {
           borderRadius: BorderRadius.circular(12.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
               spreadRadius: 1,
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
           ],
-          border: Border.all(color: Colors.grey.withOpacity(0.2), width: 1),
+          border: Border.all(color: Colors.grey.withValues(alpha: 0.2), width: 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,10 +124,10 @@ class _AppointmentCardState extends State<AppointmentCard> {
                     vertical: 6.h,
                   ),
                   decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.1),
+                    color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20.r),
                     border: Border.all(
-                      color: statusColor.withOpacity(0.3),
+                      color: statusColor.withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -154,10 +154,10 @@ class _AppointmentCardState extends State<AppointmentCard> {
                         CancelAppointmentCubit(getIt.get<PaymentRepo>()),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
+                        color: Colors.red.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8.r),
                         border: Border.all(
-                          color: Colors.red.withOpacity(0.3),
+                          color: Colors.red.withValues(alpha: 0.3),
                           width: 1,
                         ),
                       ),
@@ -291,10 +291,10 @@ class _AppointmentCardState extends State<AppointmentCard> {
                 : Container(
                     padding: EdgeInsets.all(12.w),
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.05),
+                      color: Colors.grey.withValues(alpha: 0.05),
                       borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(
-                        color: Colors.grey.withOpacity(0.2),
+                        color: Colors.grey.withValues(alpha: 0.2),
                         width: 1,
                       ),
                     ),
@@ -612,12 +612,15 @@ class _AppointmentCardState extends State<AppointmentCard> {
         ),
       );
 
+      // ignore: use_build_context_synchronously
       Navigator.pop(context); // إغلاق loading dialog
 
       // 3. عرض Payment Sheet
       await Stripe.instance.presentPaymentSheet();
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       // 4. الدفع نجح - تحديث حالة الموعد
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("✅ تم الدفع بنجاح"),
@@ -626,6 +629,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
         ),
       );
     } on StripeException catch (e) {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
 
       String errorMessage;
@@ -644,6 +648,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
               "خطأ في الدفع: ${e.error.localizedMessage ?? 'خطأ غير معروف'}";
       }
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(errorMessage),
@@ -652,8 +657,10 @@ class _AppointmentCardState extends State<AppointmentCard> {
         ),
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context); // إغلاق loading dialog إذا كان مفتوحاً
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("خطأ عام: $e"),

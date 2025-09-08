@@ -11,8 +11,13 @@ class AppointmentsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocProvider(
-        create: (context) => FetchAppointmentsCubit(getIt.get<PaymentRepo>()),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+                FetchAppointmentsCubit(getIt.get<PaymentRepo>()),
+          ),
+        ],
         child: AppointmentsViewBody(),
       ),
     );

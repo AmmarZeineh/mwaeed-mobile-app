@@ -28,6 +28,11 @@ import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboard
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/change_password_cubit/change_password_cubit.dart';
 import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/domain/repos/rating_repo.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/add_rating_cubit/add_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/cubit/delete_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/edit_rating_cubit/edit_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/fetch_user_rating_cubit/fetch_user_rating_cubit.dart';
 import 'package:mwaeed_mobile_app/firebase_options.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
@@ -77,6 +82,19 @@ void main() async {
               BlocProvider(
                 create: (context) =>
                     FetchNotificationCubit(getIt.get<NotificationRepo>()),
+              ),
+              BlocProvider(
+                create: (context) => AddRatingCubit(getIt.get<RatingRepo>()),
+              ),
+              BlocProvider(
+                create: (context) => EditRatingCubit(getIt.get<RatingRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    FetchUserRatingCubit(getIt.get<RatingRepo>()),
+              ),
+              BlocProvider(
+                create: (context) => DeleteRatingCubit(getIt.get<RatingRepo>()),
               ),
               BlocProvider(
                 create: (context) => VerifyCubit(getIt.get<AuthRepo>()),

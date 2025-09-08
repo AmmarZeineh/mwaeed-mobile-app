@@ -15,6 +15,8 @@ import 'package:mwaeed_mobile_app/features/payment/data/repos/payment_repo_impl.
 import 'package:mwaeed_mobile_app/features/payment/domain/repos/payment_repo.dart';
 import 'package:mwaeed_mobile_app/features/profile/data/repos/profile_repo_impl.dart';
 import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
+import 'package:mwaeed_mobile_app/features/rating/data/repos/rating_repo_impl.dart';
+import 'package:mwaeed_mobile_app/features/rating/domain/repos/rating_repo.dart';
 import 'package:mwaeed_mobile_app/features/search/data/repos/search_repo_impl.dart';
 import 'package:mwaeed_mobile_app/features/search/domain/repos/search_repo.dart';
 
@@ -35,4 +37,5 @@ void setupLocator() {
   getIt.registerSingleton<NotificationRepo>(
     NotificationRepoImpl(getIt.get<Api>()),
   );
+  getIt.registerSingleton<RatingRepo>(RatingRepoImpl(getIt.get<Api>()));
 }

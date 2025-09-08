@@ -13,8 +13,12 @@ import 'package:mwaeed_mobile_app/features/payment/domain/entities/appointment_e
 import 'package:mwaeed_mobile_app/features/payment/domain/repos/payment_repo.dart';
 import 'package:mwaeed_mobile_app/features/payment/presentation/cubits/cancel_appointment_cubit/cancel_appointment_cubit.dart';
 import 'package:mwaeed_mobile_app/features/payment/presentation/cubits/fetch_appointments_cubit/fetch_appointments_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/add_rating_cubit/add_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/fetch_user_rating_cubit/fetch_user_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/views/widgets/rating_dialog.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/views/widgets/rating_item_widget.dart';
 
-class AppointmentCard extends StatelessWidget {
+class AppointmentCard extends StatefulWidget {
   final AppointmentEntity appointment;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
@@ -28,6 +32,11 @@ class AppointmentCard extends StatelessWidget {
     this.onCancel,
   });
 
+  @override
+  State<AppointmentCard> createState() => _AppointmentCardState();
+}
+
+class _AppointmentCardState extends State<AppointmentCard> {
   Color _getStatusColor(String status) {
     switch (status.toUpperCase()) {
       case 'PENDING':
@@ -72,12 +81,21 @@ class AppointmentCard extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    context.read<FetchUserRatingCubit>().getUserRatingForSpicificProvider(
+      providerId: widget.appointment.providerId,
+      context: context,
+    );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final statusColor = _getStatusColor(appointment.status);
-    final statusIcon = _getStatusIcon(appointment.status);
+    final statusColor = _getStatusColor(widget.appointment.status);
+    final statusIcon = _getStatusIcon(widget.appointment.status);
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
         margin: EdgeInsets.only(bottom: 16.h),
         padding: EdgeInsets.all(16.w),
@@ -119,7 +137,8 @@ class AppointmentCard extends StatelessWidget {
                       Icon(statusIcon, size: 16.sp, color: statusColor),
                       SizedBox(width: 4.w),
                       Text(
-                        'appointments.${appointment.status.toLowerCase()}'.tr(),
+                        'appointments.${widget.appointment.status.toLowerCase()}'
+                            .tr(),
                         style: AppTextStyles.w600_12.copyWith(
                           color: statusColor,
                         ),
@@ -129,7 +148,7 @@ class AppointmentCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 // زر الإلغاء في الزاوية العلوية اليمنى
-                if (_canCancelAppointment(appointment.status))
+                if (_canCancelAppointment(widget.appointment.status))
                   BlocProvider(
                     create: (context) =>
                         CancelAppointmentCubit(getIt.get<PaymentRepo>()),
@@ -153,7 +172,7 @@ class AppointmentCard extends StatelessWidget {
                                     .read<FetchAppointmentsCubit>()
                                     .fetchAppointments(
                                       context: context,
-                                      state: appointment.status,
+                                      state: widget.appointment.status,
                                     );
                               }
                             },
@@ -185,8 +204,8 @@ class AppointmentCard extends StatelessWidget {
                                       .read<CancelAppointmentCubit>()
                                       .cancelAppointment(
                                         context: context,
-                                        appointmentId: appointment.id,
-                                        state: appointment.status,
+                                        appointmentId: widget.appointment.id,
+                                        state: widget.appointment.status,
                                       );
                                 },
                                 icon: Icon(
@@ -216,7 +235,7 @@ class AppointmentCard extends StatelessWidget {
                   child: _buildInfoItem(
                     icon: Icons.calendar_today,
                     label: 'appointments.date'.tr(),
-                    value: _formatDate(appointment.appointmentDate),
+                    value: _formatDate(widget.appointment.appointmentDate),
                   ),
                 ),
                 SizedBox(width: 16.w),
@@ -225,7 +244,7 @@ class AppointmentCard extends StatelessWidget {
                     icon: Icons.access_time,
                     label: 'appointments.time'.tr(),
                     value:
-                        '${_formatTime(appointment.startTime)} - ${_formatTime(appointment.endTime)}',
+                        '${_formatTime(widget.appointment.startTime)} - ${_formatTime(widget.appointment.endTime)}',
                   ),
                 ),
               ],
@@ -240,7 +259,7 @@ class AppointmentCard extends StatelessWidget {
                   child: _buildInfoItem(
                     icon: Icons.design_services,
                     label: 'appointments.service_id'.tr(),
-                    value: '#${appointment.serviceId}',
+                    value: '#${widget.appointment.serviceId}',
                   ),
                 ),
                 SizedBox(width: 16.w),
@@ -248,18 +267,18 @@ class AppointmentCard extends StatelessWidget {
                   child: _buildInfoItem(
                     icon: Icons.person,
                     label: 'appointments.provider_id'.tr(),
-                    value: '#${appointment.providerId}',
+                    value: '#${widget.appointment.providerId}',
                   ),
                 ),
               ],
             ),
 
-            if (appointment.notes.isNotEmpty) ...[
+            if (widget.appointment.notes.isNotEmpty) ...[
               SizedBox(height: 12.h),
               _buildInfoItem(
                 icon: Icons.note_outlined,
                 label: 'appointments.notes'.tr(),
-                value: appointment.notes,
+                value: widget.appointment.notes,
                 maxLines: 2,
               ),
             ],
@@ -267,7 +286,7 @@ class AppointmentCard extends StatelessWidget {
             SizedBox(height: 16.h),
 
             // Payment Info
-            appointment.status == 'CANCELLED'
+            widget.appointment.status == 'CANCELLED'
                 ? SizedBox()
                 : Container(
                     padding: EdgeInsets.all(12.w),
@@ -312,14 +331,14 @@ class AppointmentCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '${appointment.totalPaid} ${'common.currency'.tr()}',
+                                  '${widget.appointment.totalPaid} ${'common.currency'.tr()}',
                                   style: AppTextStyles.w600_14.copyWith(
                                     color: Colors.green,
                                   ),
                                 ),
                               ],
                             ),
-                            if (appointment.remainingAmount > 0)
+                            if (widget.appointment.remainingAmount > 0)
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -330,7 +349,7 @@ class AppointmentCard extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    '${appointment.remainingAmount} ${'common.currency'.tr()}',
+                                    '${widget.appointment.remainingAmount} ${'common.currency'.tr()}',
                                     style: AppTextStyles.w600_14.copyWith(
                                       color: Colors.orange,
                                     ),
@@ -340,7 +359,7 @@ class AppointmentCard extends StatelessWidget {
                           ],
                         ),
 
-                        if (appointment.remainingAmount > 0)
+                        if (widget.appointment.remainingAmount > 0)
                           GestureDetector(
                             onTap: () async {
                               showDialog(
@@ -385,144 +404,16 @@ class AppointmentCard extends StatelessWidget {
                                                 return CustomElevatedButton(
                                                   title: 'pay.pay'.tr(),
                                                   onPressed: () async {
-                                                    showDialog(
-                                                      context: context,
-                                                      barrierDismissible: false,
-                                                      builder: (context) => AlertDialog(
-                                                        content: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            CircularProgressIndicator(),
-                                                            SizedBox(
-                                                              height: 16,
-                                                            ),
-                                                            Text(
-                                                              'جاري تحضير الدفع...',
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
+                                                    await _handlePayment(
+                                                      context,
+                                                      state,
                                                     );
-                                                    try {
-                                                      // 2. تهيئة Payment Sheet
-                                                      await Stripe.instance.initPaymentSheet(
-                                                        paymentSheetParameters: SetupPaymentSheetParameters(
-                                                          paymentIntentClientSecret:
-                                                              state
-                                                                  .clientSecret,
-                                                          merchantDisplayName:
-                                                              "Mwaeed",
-                                                          style:
-                                                              ThemeMode.light,
-                                                          appearance: PaymentSheetAppearance(
-                                                            colors:
-                                                                PaymentSheetAppearanceColors(
-                                                                  primary:
-                                                                      Colors
-                                                                          .blue,
-                                                                ),
-                                                          ),
-                                                          // إضافة billing details إذا كانت متوفرة
-                                                          customerId:
-                                                              null, // أضف customer ID إذا كان متوفراً
-                                                          customerEphemeralKeySecret:
-                                                              null, // أضف ephemeral key إذا كان متوفراً
-                                                          setupIntentClientSecret:
-                                                              null,
-                                                          allowsDelayedPaymentMethods:
-                                                              true,
-                                                        ),
-                                                      );
-
-                                                      Navigator.pop(
-                                                        context,
-                                                      ); // إغلاق loading dialog
-
-                                                      // 3. عرض Payment Sheet
-                                                      await Stripe.instance
-                                                          .presentPaymentSheet();
-                                                      Navigator.pop(context);
-                                                      // 4. الدفع نجح - تحديث حالة الموعد
-                                                      ScaffoldMessenger.of(
-                                                        context,
-                                                      ).showSnackBar(
-                                                        const SnackBar(
-                                                          content: Text(
-                                                            "✅ تم الدفع بنجاح",
-                                                          ),
-                                                          backgroundColor:
-                                                              Colors.green,
-                                                          duration: Duration(
-                                                            seconds: 3,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    } on StripeException catch (
-                                                      e
-                                                    ) {
-                                                      Navigator.pop(context);
-
-                                                      String errorMessage;
-                                                      switch (e.error.code) {
-                                                        case FailureCode
-                                                            .Canceled:
-                                                          errorMessage =
-                                                              "تم إلغاء عملية الدفع";
-                                                          break;
-                                                        case FailureCode.Failed:
-                                                          errorMessage =
-                                                              "فشل في عملية الدفع";
-                                                          break;
-                                                        case FailureCode
-                                                            .Timeout:
-                                                          errorMessage =
-                                                              "انتهت مهلة الدفع";
-                                                          break;
-                                                        default:
-                                                          errorMessage =
-                                                              "خطأ في الدفع: ${e.error.localizedMessage ?? 'خطأ غير معروف'}";
-                                                      }
-
-                                                      ScaffoldMessenger.of(
-                                                        context,
-                                                      ).showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            errorMessage,
-                                                          ),
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                          duration: Duration(
-                                                            seconds: 4,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    } catch (e) {
-                                                      Navigator.pop(
-                                                        context,
-                                                      ); // إغلاق loading dialog إذا كان مفتوحاً
-
-                                                      ScaffoldMessenger.of(
-                                                        context,
-                                                      ).showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            "خطأ عام: $e",
-                                                          ),
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                          duration: Duration(
-                                                            seconds: 4,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
                                                   },
                                                 );
                                               }
                                               return ChoosFullyOrDepositButtons(
-                                                appointmentEntity: appointment,
+                                                appointmentEntity:
+                                                    widget.appointment,
                                               );
                                             },
                                           ),
@@ -551,24 +442,128 @@ class AppointmentCard extends StatelessWidget {
                               ),
                             ),
                           ),
+
+                        if (widget.appointment.status == 'COMPLETED')
+                          BlocBuilder<
+                            FetchUserRatingCubit,
+                            FetchUserRatingState
+                          >(
+                            builder: (context, state) {
+                              if (state is FetchUserRatingLoading) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (state is FetchUserRatingFailure) {
+                                return Center(child: Text(state.errMessage));
+                              } else if (state is FetchUserRatingSuccess) {
+                                if (state.ratingEntity == null) {
+                                  return BlocBuilder<
+                                    AddRatingCubit,
+                                    AddRatingState
+                                  >(
+                                    builder: (context, state) {
+                                      if (state is AddRatingFailure) {
+                                        return Center(
+                                          child: Text(state.errMessage),
+                                        );
+                                      } else if (state is AddRatingLoading) {
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      } else if (state is AddRatingSuccess) {
+                                        return Text(
+                                          'Rating added successfully',
+                                        );
+                                      }
+                                      return Column(
+                                        children: [
+                                          SizedBox(height: 12),
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) => RatingDialog(
+                                                  providerName: widget
+                                                      .appointment
+                                                      .providerId
+                                                      .toString(),
+                                                  onSubmit:
+                                                      (
+                                                        int rating,
+                                                        String comment,
+                                                      ) async {
+                                                        await context
+                                                            .read<
+                                                              AddRatingCubit
+                                                            >()
+                                                            .submitRating(
+                                                              appointmentId:
+                                                                  widget
+                                                                      .appointment
+                                                                      .id,
+                                                              providerId: widget
+                                                                  .appointment
+                                                                  .providerId,
+                                                              rating: rating,
+                                                              comment: comment,
+                                                              context: context,
+                                                            );
+                                                      },
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 16.w,
+                                                vertical: 8.h,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Colors.amber,
+                                                borderRadius:
+                                                    BorderRadius.circular(12.r),
+                                              ),
+                                              child: Text(
+                                                'appointments.leave_review'
+                                                    .tr(),
+                                                style: AppTextStyles.w600_12
+                                                    .copyWith(
+                                                      color: Colors.white,
+                                                    ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  return RatingItemWidget(
+                                    rating: state.ratingEntity!,
+                                    isEdit: true,
+                                    appointmentEntity: widget.appointment,
+                                  );
+                                }
+                              }
+                              return SizedBox();
+                            },
+                          ),
                       ],
                     ),
                   ),
 
             SizedBox(height: 8.h),
 
-            // Footer with ID and created date
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${'appointments.id'.tr()}: #${appointment.id}',
+                  '${'appointments.id'.tr()}: #${widget.appointment.id}',
                   style: AppTextStyles.w400_12.copyWith(
                     color: Colors.grey[600],
                   ),
                 ),
                 Text(
-                  _formatDate(appointment.createdAt),
+                  _formatDate(widget.appointment.createdAt),
                   style: AppTextStyles.w400_12.copyWith(
                     color: Colors.grey[600],
                   ),
@@ -579,6 +574,94 @@ class AppointmentCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _handlePayment(
+    BuildContext context,
+    ClientSecretSuccess state,
+  ) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 16),
+            Text('جاري تحضير الدفع...'),
+          ],
+        ),
+      ),
+    );
+    try {
+      // 2. تهيئة Payment Sheet
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: state.clientSecret,
+          merchantDisplayName: "Mwaeed",
+          style: ThemeMode.light,
+          appearance: PaymentSheetAppearance(
+            colors: PaymentSheetAppearanceColors(primary: Colors.blue),
+          ),
+          // إضافة billing details إذا كانت متوفرة
+          customerId: null, // أضف customer ID إذا كان متوفراً
+          customerEphemeralKeySecret: null, // أضف ephemeral key إذا كان متوفراً
+          setupIntentClientSecret: null,
+          allowsDelayedPaymentMethods: true,
+        ),
+      );
+
+      Navigator.pop(context); // إغلاق loading dialog
+
+      // 3. عرض Payment Sheet
+      await Stripe.instance.presentPaymentSheet();
+      Navigator.pop(context);
+      // 4. الدفع نجح - تحديث حالة الموعد
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("✅ تم الدفع بنجاح"),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } on StripeException catch (e) {
+      Navigator.pop(context);
+
+      String errorMessage;
+      switch (e.error.code) {
+        case FailureCode.Canceled:
+          errorMessage = "تم إلغاء عملية الدفع";
+          break;
+        case FailureCode.Failed:
+          errorMessage = "فشل في عملية الدفع";
+          break;
+        case FailureCode.Timeout:
+          errorMessage = "انتهت مهلة الدفع";
+          break;
+        default:
+          errorMessage =
+              "خطأ في الدفع: ${e.error.localizedMessage ?? 'خطأ غير معروف'}";
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 4),
+        ),
+      );
+    } catch (e) {
+      Navigator.pop(context); // إغلاق loading dialog إذا كان مفتوحاً
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("خطأ عام: $e"),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 4),
+        ),
+      );
+    }
   }
 
   Widget _buildInfoItem({

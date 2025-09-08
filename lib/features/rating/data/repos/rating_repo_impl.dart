@@ -58,4 +58,30 @@ class RatingRepoImpl implements RatingRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> editRating({
+    required BuildContext context,
+    required int providerId,
+    required int appointmentId,
+    required int rating,
+    required int ratingId,
+    required String? comment,
+  }) async {
+    try {
+      await _api.patch(
+        url: '$baseUrl/ratings/$ratingId',
+        token: context.read<UserCubit>().currentUser!.accessToken,
+        body: {
+          "score": rating,
+          "comment": comment,
+          "providerId": providerId,
+          "appointmentId": appointmentId,
+        },
+      );
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

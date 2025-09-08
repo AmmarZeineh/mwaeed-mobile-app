@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mwaeed_mobile_app/core/helper_classes/date_helper.dart';
+import 'package:mwaeed_mobile_app/features/payment/domain/entities/appointment_entity.dart';
 import 'package:mwaeed_mobile_app/features/rating/domain/entities/rating_entity.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/edit_rating_cubit/edit_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/views/widgets/edit_rating_dialog.dart';
 
 class RatingItemWidget extends StatelessWidget {
   final RatingEntity rating;
+  final bool isEdit;
+  final AppointmentEntity? appointmentEntity;
 
-  const RatingItemWidget({super.key, required this.rating});
+  const RatingItemWidget({
+    super.key,
+    required this.rating,
+    this.isEdit = false,
+    this.appointmentEntity,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,25 +39,56 @@ class RatingItemWidget extends StatelessWidget {
               SizedBox(width: 12),
 
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      rating.userEntity.name,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          rating.userEntity.name,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          DateHelper.getFormattedDateEnglish(rating.createdAt),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 4),
-                    Text(
-                      DateHelper.getFormattedDateEnglish(rating.createdAt),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
+                    Spacer(),
+                    isEdit
+                        ? IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => EditRatingDialog(
+                                  providerName: rating.providerEntity.name,
+                                  currentRating: rating.score,
+                                  currentComment: rating.comment,
+                                  onUpdate: (score, comment) {
+                                    context.read<EditRatingCubit>().editRating(
+                                      ratingId: rating.id,
+                                      context: context,
+                                      providerId: rating.providerEntity.id,
+                                      appointmentId: appointmentEntity!.id,
+                                      rating: score,
+                                      comment: comment,
+                                    );
+                                  },
+                                  onDelete: () {},
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.edit),
+                          )
+                        : SizedBox(),
                   ],
                 ),
               ),

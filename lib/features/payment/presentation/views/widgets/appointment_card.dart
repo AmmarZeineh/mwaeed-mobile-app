@@ -539,6 +539,8 @@ class _AppointmentCardState extends State<AppointmentCard> {
                                 } else {
                                   return RatingItemWidget(
                                     rating: state.ratingEntity!,
+                                    isEdit: true,
+                                    appointmentEntity: widget.appointment,
                                   );
                                 }
                               }

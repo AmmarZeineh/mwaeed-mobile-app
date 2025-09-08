@@ -15,4 +15,14 @@ abstract class RatingRepo {
     required BuildContext context,
     required int providerId,
   });
+
+  Future<Either<Failure, void>> editRating({
+    required BuildContext context,
+    required int providerId,
+    required int appointmentId,
+    required int rating,
+    required int ratingId,
+
+    required String? comment,
+  });
 }

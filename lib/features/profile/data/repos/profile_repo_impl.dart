@@ -1,5 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mwaeed_mobile_app/constants.dart';
+import 'package:mwaeed_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:mwaeed_mobile_app/core/errors/failure.dart';
 import 'package:mwaeed_mobile_app/core/services/api.dart';
 import 'package:mwaeed_mobile_app/features/profile/data/models/city_model.dart';
@@ -44,6 +47,24 @@ class ProfileRepoImpl implements ProfileRepo {
       return Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required BuildContext context,
+  }) {
+    try {
+      _api.patch(
+        url: '$baseUrl/user/change-password',
+        body: {'oldPassword': oldPassword, 'newPassword': newPassword},
+        token: context.read<UserCubit>().currentUser!.accessToken,
+      );
+      return Future.value(Right(null));
+    } catch (e) {
+      return Future.value(Left(ServerFailure(e.toString())));
     }
   }
 }

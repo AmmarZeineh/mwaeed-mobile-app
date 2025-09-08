@@ -14,9 +14,11 @@ import 'package:mwaeed_mobile_app/features/payment/domain/repos/payment_repo.dar
 import 'package:mwaeed_mobile_app/features/payment/presentation/cubits/cancel_appointment_cubit/cancel_appointment_cubit.dart';
 import 'package:mwaeed_mobile_app/features/payment/presentation/cubits/fetch_appointments_cubit/fetch_appointments_cubit.dart';
 import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/add_rating_cubit/add_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/fetch_user_rating_cubit/fetch_user_rating_cubit.dart';
 import 'package:mwaeed_mobile_app/features/rating/presentation/views/widgets/rating_dialog.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/views/widgets/rating_item_widget.dart';
 
-class AppointmentCard extends StatelessWidget {
+class AppointmentCard extends StatefulWidget {
   final AppointmentEntity appointment;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
@@ -30,6 +32,11 @@ class AppointmentCard extends StatelessWidget {
     this.onCancel,
   });
 
+  @override
+  State<AppointmentCard> createState() => _AppointmentCardState();
+}
+
+class _AppointmentCardState extends State<AppointmentCard> {
   Color _getStatusColor(String status) {
     switch (status.toUpperCase()) {
       case 'PENDING':
@@ -74,12 +81,21 @@ class AppointmentCard extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    context.read<FetchUserRatingCubit>().getUserRatingForSpicificProvider(
+      providerId: widget.appointment.providerId,
+      context: context,
+    );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final statusColor = _getStatusColor(appointment.status);
-    final statusIcon = _getStatusIcon(appointment.status);
+    final statusColor = _getStatusColor(widget.appointment.status);
+    final statusIcon = _getStatusIcon(widget.appointment.status);
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
         margin: EdgeInsets.only(bottom: 16.h),
         padding: EdgeInsets.all(16.w),
@@ -121,7 +137,8 @@ class AppointmentCard extends StatelessWidget {
                       Icon(statusIcon, size: 16.sp, color: statusColor),
                       SizedBox(width: 4.w),
                       Text(
-                        'appointments.${appointment.status.toLowerCase()}'.tr(),
+                        'appointments.${widget.appointment.status.toLowerCase()}'
+                            .tr(),
                         style: AppTextStyles.w600_12.copyWith(
                           color: statusColor,
                         ),
@@ -131,7 +148,7 @@ class AppointmentCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 // زر الإلغاء في الزاوية العلوية اليمنى
-                if (_canCancelAppointment(appointment.status))
+                if (_canCancelAppointment(widget.appointment.status))
                   BlocProvider(
                     create: (context) =>
                         CancelAppointmentCubit(getIt.get<PaymentRepo>()),
@@ -155,7 +172,7 @@ class AppointmentCard extends StatelessWidget {
                                     .read<FetchAppointmentsCubit>()
                                     .fetchAppointments(
                                       context: context,
-                                      state: appointment.status,
+                                      state: widget.appointment.status,
                                     );
                               }
                             },
@@ -187,8 +204,8 @@ class AppointmentCard extends StatelessWidget {
                                       .read<CancelAppointmentCubit>()
                                       .cancelAppointment(
                                         context: context,
-                                        appointmentId: appointment.id,
-                                        state: appointment.status,
+                                        appointmentId: widget.appointment.id,
+                                        state: widget.appointment.status,
                                       );
                                 },
                                 icon: Icon(
@@ -218,7 +235,7 @@ class AppointmentCard extends StatelessWidget {
                   child: _buildInfoItem(
                     icon: Icons.calendar_today,
                     label: 'appointments.date'.tr(),
-                    value: _formatDate(appointment.appointmentDate),
+                    value: _formatDate(widget.appointment.appointmentDate),
                   ),
                 ),
                 SizedBox(width: 16.w),
@@ -227,7 +244,7 @@ class AppointmentCard extends StatelessWidget {
                     icon: Icons.access_time,
                     label: 'appointments.time'.tr(),
                     value:
-                        '${_formatTime(appointment.startTime)} - ${_formatTime(appointment.endTime)}',
+                        '${_formatTime(widget.appointment.startTime)} - ${_formatTime(widget.appointment.endTime)}',
                   ),
                 ),
               ],
@@ -242,7 +259,7 @@ class AppointmentCard extends StatelessWidget {
                   child: _buildInfoItem(
                     icon: Icons.design_services,
                     label: 'appointments.service_id'.tr(),
-                    value: '#${appointment.serviceId}',
+                    value: '#${widget.appointment.serviceId}',
                   ),
                 ),
                 SizedBox(width: 16.w),
@@ -250,18 +267,18 @@ class AppointmentCard extends StatelessWidget {
                   child: _buildInfoItem(
                     icon: Icons.person,
                     label: 'appointments.provider_id'.tr(),
-                    value: '#${appointment.providerId}',
+                    value: '#${widget.appointment.providerId}',
                   ),
                 ),
               ],
             ),
 
-            if (appointment.notes.isNotEmpty) ...[
+            if (widget.appointment.notes.isNotEmpty) ...[
               SizedBox(height: 12.h),
               _buildInfoItem(
                 icon: Icons.note_outlined,
                 label: 'appointments.notes'.tr(),
-                value: appointment.notes,
+                value: widget.appointment.notes,
                 maxLines: 2,
               ),
             ],
@@ -269,7 +286,7 @@ class AppointmentCard extends StatelessWidget {
             SizedBox(height: 16.h),
 
             // Payment Info
-            appointment.status == 'CANCELLED'
+            widget.appointment.status == 'CANCELLED'
                 ? SizedBox()
                 : Container(
                     padding: EdgeInsets.all(12.w),
@@ -314,14 +331,14 @@ class AppointmentCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '${appointment.totalPaid} ${'common.currency'.tr()}',
+                                  '${widget.appointment.totalPaid} ${'common.currency'.tr()}',
                                   style: AppTextStyles.w600_14.copyWith(
                                     color: Colors.green,
                                   ),
                                 ),
                               ],
                             ),
-                            if (appointment.remainingAmount > 0)
+                            if (widget.appointment.remainingAmount > 0)
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -332,7 +349,7 @@ class AppointmentCard extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    '${appointment.remainingAmount} ${'common.currency'.tr()}',
+                                    '${widget.appointment.remainingAmount} ${'common.currency'.tr()}',
                                     style: AppTextStyles.w600_14.copyWith(
                                       color: Colors.orange,
                                     ),
@@ -342,7 +359,7 @@ class AppointmentCard extends StatelessWidget {
                           ],
                         ),
 
-                        if (appointment.remainingAmount > 0)
+                        if (widget.appointment.remainingAmount > 0)
                           GestureDetector(
                             onTap: () async {
                               showDialog(
@@ -395,7 +412,8 @@ class AppointmentCard extends StatelessWidget {
                                                 );
                                               }
                                               return ChoosFullyOrDepositButtons(
-                                                appointmentEntity: appointment,
+                                                appointmentEntity:
+                                                    widget.appointment,
                                               );
                                             },
                                           ),
@@ -425,69 +443,106 @@ class AppointmentCard extends StatelessWidget {
                             ),
                           ),
 
-                        if (appointment.status == 'COMPLETED')
-                          BlocBuilder<AddRatingCubit, AddRatingState>(
+                        if (widget.appointment.status == 'COMPLETED')
+                          BlocBuilder<
+                            FetchUserRatingCubit,
+                            FetchUserRatingState
+                          >(
                             builder: (context, state) {
-                              if (state is AddRatingFailure) {
-                                return Center(child: Text(state.errMessage));
-                              } else if (state is AddRatingLoading) {
+                              if (state is FetchUserRatingLoading) {
                                 return Center(
                                   child: CircularProgressIndicator(),
                                 );
-                              } else if (state is AddRatingSuccess) {
-                                return Text('Rating added successfully');
-                              }
-                              return Column(
-                                children: [
-                                  SizedBox(height: 12),
-                                  GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => RatingDialog(
-                                          providerName: appointment.providerId
-                                              .toString(),
-                                          onSubmit:
-                                              (
-                                                int rating,
-                                                String comment,
-                                              ) async {
-                                                await context
-                                                    .read<AddRatingCubit>()
-                                                    .submitRating(
-                                                      appointmentId:
-                                                          appointment.id,
-                                                      providerId: appointment
-                                                          .providerId,
-                                                      rating: rating,
-                                                      comment: comment,
-                                                      context: context,
-                                                    );
-                                              },
-                                        ),
+                              } else if (state is FetchUserRatingFailure) {
+                                return Center(child: Text(state.errMessage));
+                              } else if (state is FetchUserRatingSuccess) {
+                                if (state.ratingEntity == null) {
+                                  return BlocBuilder<
+                                    AddRatingCubit,
+                                    AddRatingState
+                                  >(
+                                    builder: (context, state) {
+                                      if (state is AddRatingFailure) {
+                                        return Center(
+                                          child: Text(state.errMessage),
+                                        );
+                                      } else if (state is AddRatingLoading) {
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      } else if (state is AddRatingSuccess) {
+                                        return Text(
+                                          'Rating added successfully',
+                                        );
+                                      }
+                                      return Column(
+                                        children: [
+                                          SizedBox(height: 12),
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) => RatingDialog(
+                                                  providerName: widget
+                                                      .appointment
+                                                      .providerId
+                                                      .toString(),
+                                                  onSubmit:
+                                                      (
+                                                        int rating,
+                                                        String comment,
+                                                      ) async {
+                                                        await context
+                                                            .read<
+                                                              AddRatingCubit
+                                                            >()
+                                                            .submitRating(
+                                                              appointmentId:
+                                                                  widget
+                                                                      .appointment
+                                                                      .id,
+                                                              providerId: widget
+                                                                  .appointment
+                                                                  .providerId,
+                                                              rating: rating,
+                                                              comment: comment,
+                                                              context: context,
+                                                            );
+                                                      },
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 16.w,
+                                                vertical: 8.h,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Colors.amber,
+                                                borderRadius:
+                                                    BorderRadius.circular(12.r),
+                                              ),
+                                              child: Text(
+                                                'appointments.leave_review'
+                                                    .tr(),
+                                                style: AppTextStyles.w600_12
+                                                    .copyWith(
+                                                      color: Colors.white,
+                                                    ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       );
                                     },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 16.w,
-                                        vertical: 8.h,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius: BorderRadius.circular(
-                                          12.r,
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'appointments.leave_review'.tr(),
-                                        style: AppTextStyles.w600_12.copyWith(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
+                                  );
+                                } else {
+                                  return RatingItemWidget(
+                                    rating: state.ratingEntity!,
+                                  );
+                                }
+                              }
+                              return SizedBox();
                             },
                           ),
                       ],
@@ -500,13 +555,13 @@ class AppointmentCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${'appointments.id'.tr()}: #${appointment.id}',
+                  '${'appointments.id'.tr()}: #${widget.appointment.id}',
                   style: AppTextStyles.w400_12.copyWith(
                     color: Colors.grey[600],
                   ),
                 ),
                 Text(
-                  _formatDate(appointment.createdAt),
+                  _formatDate(widget.appointment.createdAt),
                   style: AppTextStyles.w400_12.copyWith(
                     color: Colors.grey[600],
                   ),

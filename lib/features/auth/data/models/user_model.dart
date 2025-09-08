@@ -25,6 +25,15 @@ class UserModel {
       phoneNumber = json['user']['phoneNumber'],
       city = json['user']['city'] ?? ' ';
 
+  factory UserModel.fromRatingJson(Map<String, dynamic> json) => UserModel(
+    accessToken: '',
+    id: json['id'],
+    name: json['name'],
+    email: '',
+    phoneNumber: '',
+    city: '',
+  );
+
   toEntity() => UserEntity(
     accessToken: accessToken,
     id: id,

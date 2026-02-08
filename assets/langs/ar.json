@@ -1,0 +1,144 @@
+{
+  "provider_details": {
+    "provider_details": "تفاصيل المزود",
+    "book_appointment": "حجز موعد",
+    "select_date": "حدد التاريخ",
+    "select_hour": "حدد الساعة",
+    "confirm": "تاكيد"
+  },
+  "auth": {
+    "phone": "رقم الهاتف",
+    "name": "الاسم",
+    "email": "البريد الالكتروني",
+    "password": "كلمة المرور",
+    "login": "تسجيل الدخول",
+    "change_password": "تغيير كلمة المرور",
+    "create_account": "انشاء حساب",
+    "forgot_password": "هل نسيت كلمة المرور؟",
+    "dont_have_account": "ليس لديك حساب؟",
+    "signup": "تسجيل",
+    "already_have_account": "لديك حساب بالفعل؟",
+    "Verify_code": "رمز التأكيد",
+    "Verify": "تأكيد",
+    "Verification_success": "تم التحقق بنجاح",
+    "Resend_available_in": "الارسال متاح بعد",
+    "code_sent": "تم ارسال رمز التحقق مره اخرى",
+    "Enter_valid_code": "ادخل رمز التحقق الصحيح",
+    "Resend_code": "ارسل رمز التحقق مره اخرى",
+    "do_you_have_an_account": " هل لديك حساب ؟",
+    "hi_welcome_back": "مرحباً بك مرة اخرى",
+    "hope_your_fine": "نتمنى ان تكون جيداً",
+    "dont_have_an_account": " لا يوجد لديك حساب ؟",
+    "please_enter_your_email": "من فضلك ادخل بريدك الالكتروني",
+    "please_enter_your_new_password": "من فضلك ادخل كلمة المرور الجديدة",
+    "logout": "تسجيل الخروج"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "مرحباً بك في مواعيد",
+      "subtitle": "احجز مواعيدك مع أي مقدم خدمة بسهولة وسرعة"
+    },
+    "screen2": {
+      "title": "كل المهن في مكان واحد",
+      "subtitle": "اكتشف مزودي الخدمات حسب المهنة أو الموقع أو التقييم"
+    },
+    "screen3": {
+      "title": "احجز وقتك بثوانٍ",
+      "subtitle": "اختر الموعد المناسب وتابع حجوزاتك بسهولة"
+    }
+  },
+  "common": {
+    "required_field": "هذا الحقل مطلوب",
+    "ok": "حسناً",
+    "cancel": "الغاء",
+    "yes": "نعم",
+    "no": "لا",
+    "close": "اغلاق",
+    "next": "التالي",
+    "skip": "تخطي",
+    "loading": "جاري التحميل",
+    "success": "نجاح",
+    "see_all": "اظهار الكل",
+    "try_again": "حاول مرة اخرى ",
+    "provider": "مقدم الخدمة",
+    "job": "الوظيفة",
+    "service": "الخدمة",
+    "language": "اللغة",
+    "save": "حفظ",
+    "currency": "ل.س"
+  },
+  "home": {
+    "search": "بحث",
+    "looking_for_provider": "هل تبحث عن مقدم خدمة؟",
+    "scedule_appointment": "احجز موعد مع افضل مقدمي الخدمات",
+    "categories": "الفئات",
+    "providers": "مقدمي الخدمات"
+  },
+  "search": {
+    "search": "بحث",
+    "no_results_found": "لا يوجد نتائج",
+    "what_are_you_looking_for": "ما الذي تبحث عنه؟"
+  },
+  "api": {
+    "connection_timeout": "انتهت مهلة الاتصال. يرجى فحص الاتصال بالإنترنت.",
+    "send_timeout": "انتهت مهلة الطلب. يرجى المحاولة مرة أخرى.",
+    "receive_timeout": "انتهت مهلة استجابة الخادم. يرجى المحاولة مرة أخرى.",
+    "request_cancelled": "تم إلغاء الطلب.",
+    "connection_error": "خطأ في الاتصال. يرجى فحص الاتصال بالإنترنت.",
+    "certificate_error": "خطأ في الشهادة. يرجى المحاولة مرة أخرى.",
+    "unknown_error": "حدث خطأ غير معروف.",
+    "bad_request": "طلب غير صحيح.",
+    "unauthorized": "غير مخول. يرجى تسجيل الدخول مرة أخرى.",
+    "forbidden": "الوصول مرفوض.",
+    "not_found": "المورد غير موجود.",
+    "validation_error": "خطأ في التحقق من صحة البيانات.",
+    "server_error": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً.",
+    "bad_gateway": "خطأ في البوابة. يرجى المحاولة مرة أخرى لاحقاً.",
+    "service_unavailable": "الخدمة غير متاحة. يرجى المحاولة مرة أخرى لاحقاً.",
+    "request_failed": "فشل الطلب برمز الحالة: {}"
+  },
+  "nav": {
+    "home": "الصفحة الرئيسية",
+    "profile": "الملف الشخصي",
+    "appointments": "المواعيد",
+    "favorite": "المفضلة"
+  },
+  "profile": {
+    "personal_info": "المعلومات الشخصية",
+    "name": "الاسم",
+    "email": "البريد الالكتروني",
+    "phone": "رقم الهاتف",
+    "city": "المدينة",
+    "settings": "الإعدادات",
+    "choose_the_lang": "اختر اللغة",
+    "are_you_sure_logout": "هل أنت متأكد من أنك تريد تسجيل الخروج؟",
+    "current_password": "كلمة المرور الحالية",
+    "current_password_is_required": "كلمة المرور الحالية مطلوبة",
+    "new_password": "كلمة المرور الجديدة",
+    "password_must_be_at_least_six_letters": "يجب ان تكون كلمة المرور ست احرف على الاقل",
+    "unmatched_password": "كلمة المرور غير متطابقة",
+    "confirm_new_password": "تأكيد كلمة المرور الجديدة"
+  },
+  "appointments": {
+    "pending": "معلق",
+    "confirmed": "مؤكد",
+    "cancelled": "ملغي",
+    "completed": "مكتمل",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "service_id": "الخدمة",
+    "provider_id": "مقدم الخدمة",
+    "notes": "ملاحظات",
+    "payment_info": "معلومات الدفع",
+    "fully_paid": "مدفوع بالكامل",
+    "partial_payment": "مدفوع جزئياً",
+    "total_paid": "المدفوع",
+    "remaining": "المتبقي",
+    "deposit_paid": "تم دفع العربون",
+    "id": "الرقم التعريفي"
+  },
+  "notification": {
+    "notifications": "الإشعارات",
+    "no_notifications": "لا توجد إشعارات"
+  }
+}

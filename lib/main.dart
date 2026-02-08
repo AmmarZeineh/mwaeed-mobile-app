@@ -1,122 +1,147 @@
+import 'dart:convert';
+
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mwaeed_mobile_app/app_keys.dart';
+import 'package:mwaeed_mobile_app/constants.dart';
+import 'package:mwaeed_mobile_app/core/cubits/user_cubit/user_cubit.dart';
+import 'package:mwaeed_mobile_app/core/helper_functions/on_generate_routes.dart';
+import 'package:mwaeed_mobile_app/core/services/custom_bloc_observer.dart';
+import 'package:mwaeed_mobile_app/core/services/get_it_service.dart';
+import 'package:mwaeed_mobile_app/core/services/notification_service.dart';
+import 'package:mwaeed_mobile_app/core/services/shared_preference_singletone.dart';
+import 'package:mwaeed_mobile_app/core/utils/app_colors.dart';
+import 'package:mwaeed_mobile_app/core/widgets/main_layout_view.dart';
+import 'package:mwaeed_mobile_app/features/auth/domain/entities/user_entity.dart';
+import 'package:mwaeed_mobile_app/features/auth/domain/repos/auth_repo.dart';
+import 'package:mwaeed_mobile_app/features/auth/presentation/cubits/verify_cubit/verify_cubit.dart';
+import 'package:mwaeed_mobile_app/features/favorite/domain/repos/favorite_repo.dart';
+import 'package:mwaeed_mobile_app/features/favorite/presentation/cubits/favorite_cubit/add_favorite_cubit.dart';
+import 'package:mwaeed_mobile_app/features/favorite/presentation/cubits/fetch_favorite_cubit/fetch_favorite_cubit.dart';
+import 'package:mwaeed_mobile_app/features/notification/domain/repos/notification_repo.dart';
+import 'package:mwaeed_mobile_app/features/notification/presentation/cubits/fetch_notification_cubit/fetch_notification_cubit.dart';
+import 'package:mwaeed_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:mwaeed_mobile_app/features/profile/domain/repos/profile_repo.dart';
+import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/change_password_cubit/change_password_cubit.dart';
+import 'package:mwaeed_mobile_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/domain/repos/rating_repo.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/add_rating_cubit/add_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/cubit/delete_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/edit_rating_cubit/edit_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/features/rating/presentation/cubits/fetch_user_rating_cubit/fetch_user_rating_cubit.dart';
+import 'package:mwaeed_mobile_app/firebase_options.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  await Prefs.init();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(
+    NotificationService.firebaseMessaginhBackgroundHandler,
+  );
+
+  Stripe.publishableKey = AppKeys.stripeKey;
+  await NotificationService.initializeNotification();
+  setupLocator();
+  await ScreenUtil.ensureScreenSize();
+  Bloc.observer = CustomBlocObserver();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('ar')],
+      path: 'assets/langs',
+      fallbackLocale: Locale('en'),
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => UserCubit()),
+              BlocProvider(
+                create: (context) => ProfileCubit(getIt.get<ProfileRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    ChangePasswordCubit(getIt.get<ProfileRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    FetchFavoriteCubit(getIt.get<FavoriteRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    AddFavoriteCubit(getIt.get<FavoriteRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    FetchNotificationCubit(getIt.get<NotificationRepo>()),
+              ),
+              BlocProvider(
+                create: (context) => AddRatingCubit(getIt.get<RatingRepo>()),
+              ),
+              BlocProvider(
+                create: (context) => EditRatingCubit(getIt.get<RatingRepo>()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    FetchUserRatingCubit(getIt.get<RatingRepo>()),
+              ),
+              BlocProvider(
+                create: (context) => DeleteRatingCubit(getIt.get<RatingRepo>()),
+              ),
+              BlocProvider(
+                create: (context) => VerifyCubit(getIt.get<AuthRepo>()),
+              ),
+            ],
+            child: MwaeedMobileApp(),
+          );
+        },
+      ),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MwaeedMobileApp extends StatelessWidget {
+  const MwaeedMobileApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final isArabic = context.locale.languageCode == 'ar';
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: AppColors.primaryColor,
         ),
+        scaffoldBackgroundColor: Colors.white,
+        fontFamily: isArabic ? 'Cairo' : 'Poppins',
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      onGenerateRoute: onGenerateRoutes,
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      initialRoute: checkIfLoggedIn(context)
+          ? MainLayoutView.routeName
+          : OnboardingView.routeName,
     );
+  }
+}
+
+bool checkIfLoggedIn(BuildContext context) {
+  if (Prefs.getString(userKey).isNotEmpty) {
+    UserEntity userEntity = UserEntity.fromJson(
+      jsonDecode(Prefs.getString(userKey)),
+    );
+    context.read<UserCubit>().setUser(userEntity);
+    return true;
+  } else {
+    return false;
   }
 }

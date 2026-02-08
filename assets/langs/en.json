@@ -1,0 +1,142 @@
+{
+  "provider_details": {
+    "provider_details": "Provider Details",
+    "book_appointment": "Book Appointment",
+    "select_date": "Select Date",
+    "select_hour": "Select Hour",
+    "confirm": "Confirm"
+  },
+  "auth": {
+    "phone": "Phone Number",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "change_password": "Change Password",
+    "create_account": "Create Account",
+    "forgot_password": "Forgot Password?",
+    "signup": "Sign Up",
+    "Verify_code": "Verify Code",
+    "Verify": "Verify",
+    "Verification_success": "Verification success",
+    "Resend_available_in": "Resend available in",
+    "code_sent": "Code sent",
+    "Enter_valid_code": "Enter valid code",
+    "Resend_code": "Resend code",
+    "do_you_have_an_account": "do you have an account ? ",
+    "hi_welcome_back": "Hi, Welcome Back!",
+    "hope_your_fine": " Hope you're doing fine",
+    "dont_have_an_account": "don't have an account ? ",
+    "please_enter_your_email": "Please enter your email",
+    "please_enter_your_new_password": "Please enter your new password",
+    "logout": "Logout"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "Welcome to Mawaeed",
+      "subtitle": "Book your appointments with any service provider easily and quickly"
+    },
+    "screen2": {
+      "title": "All professions in one place",
+      "subtitle": "Find providers by profession, location, or rating"
+    },
+    "screen3": {
+      "title": "Book your time in seconds",
+      "subtitle": "Choose the right time and manage your bookings effortlessly"
+    }
+  },
+  "common": {
+    "required_field": "This field is required",
+    "ok": "Ok",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "close": "Close",
+    "next": "Next",
+    "skip": "Skip",
+    "loading": "Loading",
+    "success": "Success",
+    "see_all": "See all",
+    "try_again": "Try again",
+    "provider": "Provider",
+    "job": "Job",
+    "service": "Service",
+    "language": "Language",
+    "save": "Save",
+    "currency": "SYP"
+  },
+  "home": {
+    "search": "Search",
+    "looking_for_provider": "Looking for specialist provider?",
+    "scedule_appointment": "Schedule an appointment with our top doctors.",
+    "categories": "Categories",
+    "providers": "Providers"
+  },
+  "search": {
+    "search": "Search",
+    "no_results_found": "No results found",
+    "what_are_you_looking_for": "What are you looking for?"
+  },
+  "api": {
+    "connection_timeout": "Connection timeout. Please check your internet connection.",
+    "send_timeout": "Request timeout. Please try again.",
+    "receive_timeout": "Server response timeout. Please try again.",
+    "request_cancelled": "Request was cancelled.",
+    "connection_error": "Connection error. Please check your internet connection.",
+    "certificate_error": "Certificate error. Please try again.",
+    "unknown_error": "Unknown error occurred.",
+    "bad_request": "Bad request.",
+    "unauthorized": "Unauthorized. Please login again.",
+    "forbidden": "Access forbidden.",
+    "not_found": "Resource not found.",
+    "validation_error": "Validation error.",
+    "server_error": "Server error. Please try again later.",
+    "bad_gateway": "Bad gateway. Please try again later.",
+    "service_unavailable": "Service unavailable. Please try again later.",
+    "request_failed": "Request failed with status: {}"
+  },
+  "nav": {
+    "home": "Home",
+    "profile": "Profile",
+    "appointments": "Appointments",
+    "favorite":"Favorite"
+  },
+  "profile": {
+    "personal_info": "Personal information",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "city": "City",
+    "settings": "Settings",
+    "choose_the_lang": "Choose the language",
+    "are_you_sure_logout": "Are you sure",
+    "current_password": "Current password",
+    "current_password_is_required": "Current password is required",
+    "new_password": "New password",
+    "password_must_be_at_least_six_letters": "Password must be at least six letters",
+    "unmatched_password": "Unmatched password",
+    "confirm_new_password": "Confirm new password"
+  },
+  "appointments": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "cancelled": "Cancelled",
+    "completed": "Completed",
+    "date": "Date",
+    "time": "Time",
+    "service_id": "Service",
+    "provider_id": "Provider",
+    "notes": "Notes",
+    "payment_info": "Payment Info",
+    "fully_paid": "Fully Paid",
+    "partial_payment": "Partially Paid",
+    "total_paid": "Total Paid",
+    "remaining": "Remaining",
+    "deposit_paid": "Deposit Paid",
+    "id": "ID"
+  },
+  "notification": {
+    "notifications": "Notifications",
+    "no_notifications": "No notifications"
+  }
+}
